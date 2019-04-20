@@ -11,8 +11,8 @@ class App extends React.Component {
       <Router>
         <Switch>
           <Route
-            path={urls.LOGIN}
             exact
+            path={urls.LOGIN}
             component={asyncComponent(() => import('./app/login'))}
           />
           <Route
