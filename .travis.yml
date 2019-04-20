@@ -1,0 +1,18 @@
+sudo: false
+
+language: node_js
+
+node_js:
+  - '11.10.0'
+
+cache: npm
+
+install:
+  - npm install
+
+jobs:
+  include:
+    - stage: 'Client Test'
+      script: npm test
+    - stage: 'Client Build'
+      script: npm run build
