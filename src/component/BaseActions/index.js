@@ -1,6 +1,6 @@
 import { toJS } from 'mobx'
-import request from 'util/request'
-import { param } from 'util/param'
+import request from '../../util/request'
+import { param } from '../../util/param'
 
 export default class BaseActions {
   constructor(store) {

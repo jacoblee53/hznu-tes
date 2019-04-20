@@ -8,14 +8,15 @@ export default(url, options = {}, allRes = false) => {
   })
   .then(r => {
     if (allRes) {
-      return r
+      return r.data
     }
 
-    if (r.code === 200) {
-      return r.data
+    if (r.data.code === 200) {
+      return r.data.data
     }
   })
   .catch(e => {
-    message.error(e.msg)
+    message.error(e.response.data.msg)
+    return e.response.data
   })
 }

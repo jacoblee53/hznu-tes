@@ -12,17 +12,18 @@ class LoginForm extends React.Component {
     this.store = props.userStore
   }
 
-  handleLogin = () => {
-    this.actions.login({
+  handleLogin = async() => {
+    let r = await this.actions.login({
       account: '1000',
       password: '1'
     })
+    console.log(r)
   }
 
   render() {
     return (
       <div className='root'>
-        <Button>登录</Button>
+        <Button onClick={this.handleLogin}>登录</Button>
       </div>
     )
   }
