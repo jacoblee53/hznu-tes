@@ -1,6 +1,5 @@
 import React from 'react'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
-import './scss/antd.scss'
 
 import asyncComponent from './component/AsyncComponent'
 import * as urls from './constant/urls.js'
