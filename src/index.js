@@ -6,7 +6,7 @@ import { LocaleProvider } from 'antd'
 import zhCN from 'antd/lib/locale-provider/zh_CN'
 import 'moment/locale/zh-cn'
 
-import App from './App'
+import App from './app'
 import injects from './inject'
 
 configure({ enforceActions: 'observed' })

@@ -1,15 +1,16 @@
 import React from 'react'
 import { observer, inject } from 'mobx-react'
-import { Form, Button, Input, Alert, Icon } from 'antd'
+import { Form, Button, Input, Icon } from 'antd'
 import { GlobalFooter } from 'ant-design-pro'
 
-import Logo from './constant/image/logo.png'
+import Logo from '../../constant/image/logo.png'
 import './index.less'
 
 const FormItem = Form.Item
 
 @Form.create()
 @inject('userActions', 'userStore')
+@observer
 class LoginForm extends React.Component {
   constructor(props) {
     super(props)
@@ -29,13 +30,25 @@ class LoginForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form
-    let footerLinks = [
+    const footerLinks = [
       {
         key: 'github',
         title: <Icon type="github" />,
         href: 'https://github.com/oddisland/hznu-tes',
         blankTarget: true,
       },
+      {
+        key: 'email',
+        title: <Icon type="mail" />,
+        href: 'mailto:toby.islanddd@gmail.com',
+        blankTarget: false,
+      },
+      {
+        key: 'share',
+        title: <Icon type="share-alt" />,
+        href: '#',
+        blankTarget: false,
+      }
     ]
 
     return (

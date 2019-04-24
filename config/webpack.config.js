@@ -111,8 +111,8 @@ module.exports = function(webpackEnv) {
           options: {
             sourceMap: isEnvProduction && shouldUseSourceMap,
             modifyVars: { // 修稿主题
-              'primary-color': '#000000',
-              'link-color': '#3273DC',
+              // 'primary-color': '#000000',
+              // 'link-color': '#3273DC',
             },
             javascriptEnabled: true // 解决上文报错
           },
