@@ -1,11 +1,14 @@
 import React from 'react'
 import { observer, inject } from 'mobx-react'
 import { Form, Button, Input, Alert, Icon } from 'antd'
+import { GlobalFooter } from 'ant-design-pro'
+
 import Logo from './constant/image/logo.png'
 import './index.less'
 
 const FormItem = Form.Item
 
+@Form.create()
 @inject('userActions', 'userStore')
 class LoginForm extends React.Component {
   constructor(props) {
@@ -26,6 +29,14 @@ class LoginForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form
+    let footerLinks = [
+      {
+        key: 'github',
+        title: <Icon type="github" />,
+        href: 'https://github.com/oddisland/hznu-tes',
+        blankTarget: true,
+      },
+    ]
 
     return (
       <div className='login__container'>
@@ -34,32 +45,26 @@ class LoginForm extends React.Component {
             <img alt='logo' src={Logo} />
             <span>学科竞赛评价系统</span>
           </div>
-          <div className='login__desc'>
-            <a href='https://github.com/oddisland/hznu-tes' target='_blank'>https://github.com/oddisland/hznu-tes</a>
-          </div>
 
           <div className='login__form'>
             <Form onSubmit={this.handleSubmit}>
-              <FormItem>
+              <FormItem hasFeedback>
                 {getFieldDecorator('account', {
                   rules: [{ required: true, message: '请输入账号' }]
                 })(
                   <Input
-                    size='large'
                     name='account'
                     prefix={<Icon type='user' />}
                     placeholder='请输入账号'
                   />
                 )}
               </FormItem>
-              <FormItem>
+              <FormItem hasFeedback>
                 {getFieldDecorator('password', {
                   rules: [{ required: true, message: '请输入密码！' }]
                 })(
-                  <Input.Password
-                    size='large'
+                  <Input
                     name='password'
-                    prefix={<Icon type='lock' />}
                     type='password'
                     placeholder='请输入密码'
                   />
@@ -70,7 +75,6 @@ class LoginForm extends React.Component {
                 <Button
                   className='login__btn'
                   type='primary'
-                  size='large'
                   htmlType='submit'
                 >
                   登录
@@ -79,9 +83,12 @@ class LoginForm extends React.Component {
             </Form>
           </div>
         </div>
+        <div className='login__footer'>
+          <GlobalFooter links={footerLinks} copyright='hznu tes © 2019 oddisland' />
+        </div>
       </div>
     )
   }
 }
 
-export default Form.create()(LoginForm)
+export default LoginForm

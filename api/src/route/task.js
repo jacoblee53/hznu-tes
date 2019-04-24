@@ -74,8 +74,8 @@ router.get('/fetch',  (req, res) => {
     })
 })
 
-router.get('/fetch/:id', (req, res) => {
-  const id = req.params.id
+router.get('/fetch', (req, res) => {
+  const id = req.query.id
 
   Task
     .findOne({ _id: id })
@@ -93,8 +93,8 @@ router.get('/fetch/:id', (req, res) => {
     })
 })
 
-router.get('/search/:query', (req, res) => {
-
+router.get('/search', (req, res) => {
+  const query = req.query.query
 })
 
 router.post('/update', (req, res) => {
@@ -143,8 +143,8 @@ router.post('/update', (req, res) => {
     })
 })
 
-router.get('/delete/:id', taskPrivilege, (req, res) => {
-  const id = req.params.id
+router.get('/delete', taskPrivilege, (req, res) => {
+  const id = req.query.id
 
   Task
     .deleteOne({ _id: id })

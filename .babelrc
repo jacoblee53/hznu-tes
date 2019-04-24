@@ -11,6 +11,12 @@
       "libraryName": "antd",
       "libraryDirectory": "es",
       "style": true
-    }]
+    }, "antd"],
+    ["import", {
+      "libraryName": "ant-design-pro",
+      "libraryDirectory": "lib",
+      "style": true,
+      "camel2DashComponentName": false,
+    }, "antd-pro"]
   ]
 }

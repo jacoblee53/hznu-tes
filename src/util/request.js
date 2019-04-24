@@ -1,7 +1,14 @@
 import axios from 'axios'
 import { message } from 'antd'
+import jwt from './token'
 
 export default(url, options = {}, allRes = false) => {
+  let token = jwt.getToken()
+
+  token
+    ? axios.defaults.headers.common.authorization = `Bearer ${token}`
+    : delete axios.defaults.headers.common.authorization
+
   return axios({
     url,
     ...options

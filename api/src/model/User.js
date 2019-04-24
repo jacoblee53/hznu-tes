@@ -45,9 +45,10 @@ userSchema.methods.setPassword = function(password) {
 }
 
 userSchema.methods.generateJWT = function() {
-  const { account, userName, role, classId } = this
+  const { account, userName, role, classId, _id } = this
   return jwt.sign(
     {
+      id: _id,
       account,
       userName,
       role,
