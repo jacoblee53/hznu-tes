@@ -1,5 +1,5 @@
 import React from 'react'
-import { Menu, Layout, Icon  } from 'antd'
+import { Menu, Layout, Icon } from 'antd'
 import { version } from '../../../package.json'
 import { NavLink } from 'react-router-dom'
 
@@ -7,6 +7,7 @@ import Logo from '../../constant/image/logo.png'
 import './index.less'
 
 const { Sider } = Layout
+const MenuItem = Menu.Item
 class DashMenu extends React.Component {
   render() {
     const { collapsed, items } = this.props
@@ -25,11 +26,7 @@ class DashMenu extends React.Component {
             <h1>学科竞赛评价系统</h1>
           </a>
         </div>
-        <Menu
-          theme='dark'
-          mode='inline'
-          className='menu'
-        >
+        <Menu theme='dark' mode='inline' className='menu'>
           {items.map(item => (
             <MenuItem key={item.path}>
               <NavLink to={item.path}>
@@ -38,7 +35,9 @@ class DashMenu extends React.Component {
               </NavLink>
             </MenuItem>
           ))}
+          {!collapsed && <div className='version'>v {version}</div>}
         </Menu>
+
       </Sider>
     )
   }

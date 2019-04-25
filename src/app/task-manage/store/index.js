@@ -1,8 +1,7 @@
 import { observable } from 'mobx'
 
 class Store {
-  @observable user = null
-  @observable menu = []
+  @observable tasks = []
 }
 
 export default new Store()

@@ -5,8 +5,17 @@ import authToken from '../middleware/authToken'
 const router = express.Router()
 
 router.post('/register', (req, res) => {
-  const { account, userName, password, role } = req.body
-  const user = new User({ account, userName, role })
+  const {
+    account,
+    userName,
+    password,
+    role
+  } = req.body
+  const user = new User({
+    account,
+    userName,
+    role
+  })
 
   user.setPassword(password)
   user
@@ -27,11 +36,14 @@ router.post('/register', (req, res) => {
 })
 
 router.post('/login', (req, res) => {
-  const { account, password } = req.body
+  const {
+    account,
+    password
+  } = req.body
 
   User.findOne({
-    account,
-  })
+      account,
+    })
     .then(r => {
       if (r && r.isValidPassword(password)) {
         res.status(200).json({
@@ -53,12 +65,17 @@ router.post('/login', (req, res) => {
 })
 
 router.post('/resetPwd', authToken, (req, res) => {
-  const { newPwd, oldPwd } = req.body
-  const { _id } = req.currentUser
+  const {
+    newPwd,
+    oldPwd
+  } = req.body
+  const {
+    _id
+  } = req.currentUser
 
   User.findOne({
-    _id,
-  })
+      _id,
+    })
     .then(r => {
       if (r.isValidPassword(oldPwd)) {
         r.setPassword(newPwd)
@@ -80,6 +97,82 @@ router.post('/resetPwd', authToken, (req, res) => {
         data: e,
       })
     })
+})
+
+router.get('/menu', (req, res) => {
+  const role = parseInt(req.query.role)
+
+  if (role === 0) {
+    res.status(200).json({
+      code: 200,
+      data: [{
+          title: '打分评价',
+          icon: 'form',
+          path: '/evaluate'
+        },
+        {
+          title: '成绩管理',
+          icon: 'dashboard',
+          path: '/scoremanage'
+        }
+      ]
+    })
+  } else if (role === 1) {
+    res.status(200).json({
+      code: 200,
+      data: [{
+          title: '任务管理',
+          icon: 'project',
+          path: '/taskmanage'
+        },
+        {
+          title: '打分评价',
+          icon: 'form',
+          path: '/evaluate'
+        },
+        {
+          title: '成绩管理',
+          icon: 'dashboard',
+          path: '/scoremanage'
+        },
+        {
+          title: '标准管理',
+          icon: 'calculator',
+          path: '/standardmanage'
+        },
+        {
+          title: '班级管理',
+          icon: 'team',
+          path: '/classmanage'
+        }
+      ]
+    })
+  } else if (role === 2) {
+    res.status(200).json({
+      code: 200,
+      data: [{
+          title: '我的任务',
+          icon: 'folder-open',
+          path: '/mytask'
+        },
+        {
+          title: '打分评价',
+          icon: 'form',
+          path: '/evaluate'
+        },
+        {
+          title: '我的成绩',
+          icon: 'audit',
+          path: '/myscore'
+        }
+      ]
+    })
+  } else {
+    res.status(500).json({
+      code: -1,
+      data: []
+    })
+  }
 })
 
 export default router

@@ -7,7 +7,7 @@ export default class BaseActions {
     this.store = store
   }
 
-  get = async (api = '', params = {}) => {
+  get = async (api = '', params = {}, allRes = false) => {
     let url
     if (api.indexOf('?') === -1) {
       url = api + `?${param(params)}`

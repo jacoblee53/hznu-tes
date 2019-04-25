@@ -15,8 +15,11 @@ class Dashboard extends React.Component {
     this.store = props.userStore
 
     this.state = {
-      collapsed: false
+      collapsed: false,
+      menu: []
     }
+
+    this.fetchMenu()
   }
 
   toggle = () => {
@@ -28,6 +31,14 @@ class Dashboard extends React.Component {
     window.location.assign(
       location.origin + location.pathname + '#' + '/login'
     )
+  }
+
+  fetchMenu = async() => {
+    const { user } = this.store
+    let r = user ? await this.actions.fetchMenu({
+      role: user.role
+    }) : []
+    this.setState({ menu: r })
   }
 
   showPersonalInfo = () => {
@@ -46,9 +57,9 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const { collapsed } = this.state
+    const { collapsed, menu } = this.state
     const { user } = this.store
-    const menu = (
+    const dropdownMenu = (
       <Menu>
         <Menu.Item>
           <span onClick={this.showPersonalInfo}>
@@ -65,27 +76,30 @@ class Dashboard extends React.Component {
 
     return (
       <Layout className='dashboard'>
-        <DashMenu collapsed={collapsed} items={[]} />
+        <DashMenu collapsed={collapsed} items={menu} />
         <Layout>
-        <div className='header'>
-          <Row type='flex' justify='space-between' align='middle'>
-            <Col className='header-left'>
-              <Icon
-                className='trigger'
-                type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
-                onClick={this.toggle}
-              />
-            </Col>
-            <Col className='header-right'>
-              <Dropdown overlay={menu}>
-                <span className='account'>
-                  <Avatar className='avatar' icon='user' />
-                  <span>{user && user.userName} | {user && config.userType[user.role]}</span>
-                </span>
-              </Dropdown>
-            </Col>
-          </Row>
-        </div>
+          <div className='header'>
+            <Row type='flex' justify='space-between' align='middle'>
+              <Col className='header-left'>
+                <Icon
+                  className='trigger'
+                  type={this.state.collapsed ? 'menu-unfold' : 'menu-fold'}
+                  onClick={this.toggle}
+                />
+              </Col>
+              <Col className='header-right'>
+                <Dropdown overlay={dropdownMenu}>
+                  <span className='account'>
+                    <Avatar className='avatar' icon='user' />
+                    <span>{user && user.userName} | {user && config.userType[user.role]}</span>
+                  </span>
+                </Dropdown>
+              </Col>
+            </Row>
+          </div>
+          <Layout.Content className='content'>
+            {this.props.children}
+          </Layout.Content>
         </Layout>
       </Layout>
     )

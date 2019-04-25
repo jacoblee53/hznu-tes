@@ -35,14 +35,18 @@ class App extends React.Component {
             path='/'
             render={() => (
               <div className='app-root'>
-                <Dashboard />
-                <div className='app-wrapper'>
-                  <div className='app-content'>
-                    <Switch>
-                      <Route exact path={urls.HOME} />
-                    </Switch>
-                  </div>
-                </div>
+                <Dashboard>
+                  <Switch>
+                    <Route exact path={urls.HOME} />
+                    <Route
+                      exact
+                      path={urls.TASK_MANAGE}
+                      component={asyncComponent(() =>
+                        import('./app/task-manage')
+                      )}
+                    />
+                  </Switch>
+                </Dashboard>
               </div>
             )}
           />

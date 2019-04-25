@@ -2,6 +2,7 @@ import axios from 'axios'
 import { message } from 'antd'
 import jwt from './token'
 
+
 export default(url, options = {}, allRes = false) => {
   let token = jwt.getToken()
 
@@ -23,7 +24,10 @@ export default(url, options = {}, allRes = false) => {
     }
   })
   .catch(e => {
-    message.error(e.response.data.msg)
-    return e.response.data
+    if (e.response) {
+      message.error(e.response.data.msg)
+      return e.response.data
+    }
+    message.error('网络错误')
   })
 }

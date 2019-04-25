@@ -1,5 +1,4 @@
 import { action, runInAction, toJS } from 'mobx'
-import { message } from 'antd'
 import BaseActions from '../../../component/BaseActions'
 import * as apis from '../constant/apis'
 import store from '../store'
@@ -48,6 +47,13 @@ class UserActions extends BaseActions {
       userName: data.userName,
       token: jwt.getToken()
     }
+  }
+
+  @action
+  async fetchMenu(params) {
+    let r = await this.get(apis.API_USER_MENU, params)
+    this.store.menu = r
+    return r
   }
 }
 
