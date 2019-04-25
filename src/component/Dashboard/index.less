@@ -1,5 +1,9 @@
 @import '../../less/variables.less';
 
+.dashboard {
+  min-height: 100vh;
+}
+
 .header {
   position: relative;
   height: 50px;
@@ -37,12 +41,6 @@
   transition: all .3s,padding 0s;
 }
 
-.logo {
-  margin-left: 20px;
-  height: 35px;
-  display: inline-block;
-}
-
 .account {
   cursor: pointer;
   display: inline-block;
@@ -62,4 +60,14 @@
   height: 24px;
   margin: 10px 10px 10px 0;
   vertical-align: middle;
+}
+
+.userinfo {
+  margin-top: 14px;
+}
+
+:global {
+  .ant-modal-confirm-btns {
+    margin-top: 0!important;
+  }
 }

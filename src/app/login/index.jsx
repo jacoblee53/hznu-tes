@@ -21,9 +21,14 @@ class LoginForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault()
 
-    this.props.form.validateFields( (err, values) => {
+    this.props.form.validateFields(async(err, values) => {
       if (!err) {
-        this.actions.login(values)
+        let r = await this.actions.login(values)
+        if (r.code === 200) {
+          window.location.assign(
+            location.origin + location.pathname + '#' + '/home'
+          )
+        }
       }
     })
   }
@@ -77,6 +82,7 @@ class LoginForm extends React.Component {
                   rules: [{ required: true, message: '请输入密码！' }]
                 })(
                   <Input
+                    prefix={<Icon type='lock' />}
                     name='password'
                     type='password'
                     placeholder='请输入密码'

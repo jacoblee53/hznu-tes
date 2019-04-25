@@ -31,9 +31,23 @@ class UserActions extends BaseActions {
     return r
   }
 
+  @action
   async logout() {
     this.store.user = null
     jwt.removeToken()
+  }
+
+  @action
+  async autoLogin() {
+    const data = jwt.decodeToken()
+    this.store.user = {
+      id: data.id,
+      role: data.role,
+      classId: data.classId,
+      account: data.account,
+      userName: data.userName,
+      token: jwt.getToken()
+    }
   }
 }
 
