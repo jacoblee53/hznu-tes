@@ -8,6 +8,7 @@ import cookieParser from 'cookie-parser'
 
 import user from './route/user'
 import task from './route/task'
+import classes from './route/classes'
 
 const app = express()
 
@@ -19,6 +20,7 @@ app.use(cookieParser())
 
 app.use('/user', user)
 app.use('/task', task)
+app.use('/classes', classes)
 
 dotenv.config()
 mongoose

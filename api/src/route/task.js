@@ -166,4 +166,4 @@ router.get('/delete', taskPrivilege, (req, res) => {
     })
 })
 
-export default Task
+export default router

@@ -10,7 +10,7 @@ const { Sider } = Layout
 const MenuItem = Menu.Item
 class DashMenu extends React.Component {
   render() {
-    const { collapsed, items } = this.props
+    const { collapsed, items = [] } = this.props
 
     return (
       <Sider

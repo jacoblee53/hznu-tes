@@ -45,6 +45,34 @@ class App extends React.Component {
                         import('./app/task-manage')
                       )}
                     />
+                    <Route
+                      exact
+                      path={urls.EVALUATE}
+                      component={asyncComponent(() =>
+                        import('./app/evaluate')
+                      )}
+                    />
+                    <Route
+                      exact
+                      path={urls.SCORE_MANAGE}
+                      component={asyncComponent(() =>
+                        import('./app/score-manage')
+                      )}
+                    />
+                    <Route
+                      exact
+                      path={urls.STANDARD_MANAGE}
+                      component={asyncComponent(() =>
+                        import('./app/standard-manage')
+                      )}
+                    />
+                    <Route
+                      exact
+                      path={urls.CLASS_MANAGE}
+                      component={asyncComponent(() =>
+                        import('./app/class-manage')
+                      )}
+                    />
                   </Switch>
                 </Dashboard>
               </div>

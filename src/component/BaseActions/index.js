@@ -7,14 +7,14 @@ export default class BaseActions {
     this.store = store
   }
 
-  get = async (api = '', params = {}, allRes = false) => {
+  get = async (api = '', params = {}, allRes) => {
     let url
     if (api.indexOf('?') === -1) {
       url = api + `?${param(params)}`
     } else {
       url = api + `&${param(params)}`
     }
-    let data = await request(url, {}, false, allRes)
+    let data = await request(url, {}, allRes)
     return toJS(data)
   }
 
