@@ -23,6 +23,7 @@ class ClassManage extends React.Component {
       searchText: '',
       isNewClassModal: false,
       isImportModal: false,
+      currentClass: null,
     }
   }
 
@@ -59,6 +60,24 @@ class ClassManage extends React.Component {
       message.success('创建成功')
       this.setState({ isNewClassModal: false })
     }
+  }
+
+  importStudent = async (data, currentClass = this.state.currentClass) => {
+    let r = await this.actions.import({
+      students: data.map(item => ({
+        ...item,
+        role: 2,
+        classId: currentClass._id
+      }))
+    })
+    if (r.code === 200) {
+      message.success(r.msg)
+      this.setState({ isImportModal: false })
+    }
+  }
+
+  handleDownload = () => {
+    this.actions.download()
   }
 
   render() {
@@ -141,7 +160,7 @@ class ClassManage extends React.Component {
               size='small'
               type='dashed'
               style={mr}
-              onClick={() => this.setState({ isImportModal: true })}
+              onClick={() => this.setState({ isImportModal: true, currentClass: record })}
             >
               <Icon type='import' />
               导入
@@ -192,7 +211,7 @@ class ClassManage extends React.Component {
           >
               添加班级
           </Button>
-          <Button type='primary'>下载示例</Button>
+          <Button type='primary' onClick={this.handleDownload}>下载示例</Button>
         </div>
 
         <Table

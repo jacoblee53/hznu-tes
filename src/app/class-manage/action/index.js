@@ -3,6 +3,7 @@ import { message } from 'antd'
 import BaseActions from '../../../component/BaseActions'
 import * as apis from '../constant/apis'
 import store from '../store'
+import filesaver from 'file-saver'
 
 class TaskManageActions extends BaseActions {
   constructor(store) {
@@ -34,6 +35,16 @@ class TaskManageActions extends BaseActions {
       message.success(r.msg)
     }
     return r
+  }
+
+  @action
+  async import(params) {
+    return await this.post(apis.API_IMPORT_STUDENTS, params, true)
+  }
+
+  @action
+  async download() {
+    await this.get(apis.API_DOWNLOAD_SAMPLE)
   }
 }
 

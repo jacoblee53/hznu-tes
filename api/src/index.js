@@ -12,6 +12,8 @@ import classes from './route/classes'
 
 const app = express()
 
+app.use('/public', express.static('public'))
+
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
