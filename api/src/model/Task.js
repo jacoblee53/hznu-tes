@@ -27,7 +27,11 @@ const taskSchema = new mongoose.Schema(
       type: Schema.Types.ObjectId,
       ref: 'User',
     },
-    expert: [
+    isExpert: {
+      type: Boolean,
+      required: true,
+    },
+    experts: [
       {
         type: Schema.Types.ObjectId,
         ref: 'User',
@@ -46,6 +50,10 @@ const taskSchema = new mongoose.Schema(
       required: true,
     },
     selfRatio: {
+      type: Number,
+      required: true,
+    },
+    mateRatio: {
       type: Number,
       required: true,
     },

@@ -14,9 +14,10 @@ router.post('/create', taskPrivilege, (req, res) => {
     taskSize,
     taskClass,
     owner,
-    expert,
-    startDate,
-    endDate,
+    experts,
+    isExpert,
+    taskDate,
+    mateRatio,
     teacherRatio,
     selfRatio,
     expertRatio,
@@ -28,12 +29,14 @@ router.post('/create', taskPrivilege, (req, res) => {
     taskSize,
     taskClass,
     owner,
-    expert,
-    startDate,
-    endDate,
+    startDate: taskDate[0],
+    endDate: taskDate[1],
+    mateRatio,
     teacherRatio,
     selfRatio,
-    expertRatio,
+    isExpert,
+    experts: isExpert ? experts : [],
+    expertRatio: isExpert ? expertRatio : 0,
   })
 
   task
@@ -48,17 +51,18 @@ router.post('/create', taskPrivilege, (req, res) => {
     .catch(e => {
       res.status(500).json({
         code: -1,
+        data: e,
         msg: '新建任务失败',
       })
     })
 })
 
 router.get('/fetch',  (req, res) => {
-  const { owner } = req.currentUser._id
+  const owner = req.currentUser._id
 
   Task
     .find({ owner })
-    .sort([['date', -1]])
+    .sort([['createdAt', -1]])
     .exec()
     .then(r => {
       res.status(200).json({
@@ -95,6 +99,24 @@ router.get('/fetch', (req, res) => {
 
 router.get('/search', (req, res) => {
   const query = req.query.query
+
+  Task
+    .find({ taskName: {
+      '$regex': query,
+      '$options': 'i'
+    }})
+    .then(r => {
+      res.status(200).json({
+        code: 200,
+        data: r
+      })
+    })
+    .catch(e => {
+      res.status(500).json({
+        code: -1,
+        data: e
+      })
+    })
 })
 
 router.post('/update', (req, res) => {
@@ -105,9 +127,10 @@ router.post('/update', (req, res) => {
     taskSize,
     taskClass,
     owner,
-    expert,
-    startDate,
-    endDate,
+    experts,
+    isExpert,
+    taskDate,
+    mateRatio,
     teacherRatio,
     selfRatio,
     expertRatio,
@@ -120,12 +143,14 @@ router.post('/update', (req, res) => {
       taskSize,
       taskClass,
       owner,
-      expert,
-      startDate,
-      endDate,
+      startDate: taskDate[0],
+      endDate: taskDate[1],
+      mateRatio,
       teacherRatio,
       selfRatio,
-      expertRatio,
+      isExpert,
+      experts: isExpert ? experts : [],
+      expertRatio: isExpert ? expertRatio : 0,
     }})
     .then(r => {
       res.status(200).json({

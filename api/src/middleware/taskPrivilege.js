@@ -4,7 +4,7 @@ export default (req, res, next) => {
   const { owner } = req.body
   User.findOne({ _id: owner })
     .then(r => {
-      if (r && r.role === 2) {
+      if (r && r.role === 1) {
         next()
       } else {
         throw Error()

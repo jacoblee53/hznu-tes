@@ -99,6 +99,27 @@ router.post('/resetPwd', authToken, (req, res) => {
     })
 })
 
+router.get('/fetch', (req, res) => {
+  const role = req.query.role
+
+  User
+    .find({ role })
+    .select('_id account userName role')
+    .exec()
+    .then(r => {
+      res.status(200).json({
+        code: 200,
+        data: r
+      })
+    })
+    .catch(e => {
+      res.status(500).json({
+        code: -1,
+        data: e
+      })
+    })
+})
+
 router.get('/menu', (req, res) => {
   const role = parseInt(req.query.role)
 

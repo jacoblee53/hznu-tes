@@ -50,6 +50,13 @@ class UserActions extends BaseActions {
   }
 
   @action
+  async fetch(params) {
+    let r = await this.get(apis.API_USER_FETCH, params)
+    this.store.experts = r
+    return r
+  }
+
+  @action
   async fetchMenu(params) {
     let r = await this.get(apis.API_USER_MENU, params)
     this.store.menu = r
