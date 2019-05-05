@@ -132,7 +132,7 @@ router.get('/menu', (req, res) => {
           path: '/evaluate'
         },
         {
-          title: '成绩管理',
+          title: '成绩统计',
           icon: 'dashboard',
           path: '/scoremanage'
         }
@@ -152,7 +152,7 @@ router.get('/menu', (req, res) => {
           path: '/evaluate'
         },
         {
-          title: '成绩管理',
+          title: '成绩统计',
           icon: 'dashboard',
           path: '/scoremanage'
         },

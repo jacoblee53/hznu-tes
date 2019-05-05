@@ -32,6 +32,8 @@ function isEdit(status) {
   'classManageStore',
   'userActions',
   'userStore',
+  'standardManageStore',
+  'standardManageActions',
   'taskManageActions'
 )
 @observer
@@ -88,12 +90,13 @@ class EditTaskModal extends React.Component {
       visible,
       onCancel,
       classManageStore,
-      userStore
+      userStore,
+      standardManageStore,
     } = this.props
     const { classes } = classManageStore
     const { experts } = userStore
-    const isChecked =
-      data && data.experts && data.experts.length > 0 ? true : false
+    const { standards } = standardManageStore
+    const isChecked = data && data.experts && data.experts.length > 0 ? true : false
 
     return (
       <Modal
@@ -141,6 +144,25 @@ class EditTaskModal extends React.Component {
             )}
           </Form.Item>
 
+          <Form.Item {...formItemLayout} label='标准'>
+            {getFieldDecorator('standard', {
+              rules: [{ required: true, message: '请选择标准' }],
+              initialValue: data.standard || null
+            })(
+              <Select
+                placeholder='请选择标准'
+                disabled={isEdit(status)}
+              >
+                {standards &&
+                  standards.map(item => (
+                    <Select.Option value={item._id} key={item._id}>
+                      {item.standardName}
+                    </Select.Option>
+                  ))}
+              </Select>
+            )}
+          </Form.Item>
+
           <Form.Item {...formItemLayout} label='有效期'>
             {getFieldDecorator('taskDate', {
               rules: [{ required: true, message: '请选择有效期' }],
@@ -152,8 +174,7 @@ class EditTaskModal extends React.Component {
                   一周: [moment(), moment().add(1, 'w')],
                   十天: [moment(), moment().add(10, 'd')],
                   两周: [moment(), moment().add(2, 'w')],
-                  一月: [moment(), moment().add(1, 'M')],
-                  两月: [moment(), moment().add(2, 'M')]
+                  一月: [moment(), moment().add(1, 'M')]
                 }}
               />
             )}

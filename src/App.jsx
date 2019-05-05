@@ -2,10 +2,10 @@ import React from 'react'
 import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import { inject, observer } from 'mobx-react'
 
-import asyncComponent from './component/AsyncComponent'
 import Dashboard from './component/Dashboard'
 import * as urls from './constant/urls.js'
 import jwt from './util/token'
+import Loadable from './component/Loadable'
 
 @inject('userActions')
 @observer
@@ -29,7 +29,7 @@ class App extends React.Component {
           <Route
             exact
             path={urls.LOGIN}
-            component={asyncComponent(() => import('./app/login'))}
+            component={Loadable({ loader: () => import('./app/login')})}
           />
           <Route
             path='/'
@@ -41,37 +41,27 @@ class App extends React.Component {
                     <Route
                       exact
                       path={urls.TASK_MANAGE}
-                      component={asyncComponent(() =>
-                        import('./app/task-manage')
-                      )}
+                      component={Loadable({ loader: () => import('./app/task-manage')})}
                     />
                     <Route
                       exact
                       path={urls.EVALUATE}
-                      component={asyncComponent(() =>
-                        import('./app/evaluate')
-                      )}
+                      component={Loadable({ loader: () => import('./app/evaluate')})}
                     />
                     <Route
                       exact
                       path={urls.SCORE_MANAGE}
-                      component={asyncComponent(() =>
-                        import('./app/score-manage')
-                      )}
+                      component={Loadable({ loader: () => import('./app/score-manage')})}
                     />
                     <Route
                       exact
                       path={urls.STANDARD_MANAGE}
-                      component={asyncComponent(() =>
-                        import('./app/standard-manage')
-                      )}
+                      component={Loadable({ loader: () => import('./app/standard-manage')})}
                     />
                     <Route
                       exact
                       path={urls.CLASS_MANAGE}
-                      component={asyncComponent(() =>
-                        import('./app/class-manage')
-                      )}
+                      component={Loadable({ loader: () => import('./app/class-manage')})}
                     />
                   </Switch>
                 </Dashboard>
