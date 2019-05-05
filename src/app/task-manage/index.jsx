@@ -33,8 +33,8 @@ class TaskManage extends React.Component {
 
   getTag = endDate => {
     return moment() > moment(endDate) ?
-      <Tag className='status-tag' color='#f50'>已截止</Tag> :
-      <Tag className='status-tag' color='#87d068'>进行中</Tag>
+      <Tag className='status-tag' color='#e85600'>已截止</Tag> :
+      <Tag className='status-tag' color='#32b643'>进行中</Tag>
   }
 
   render() {

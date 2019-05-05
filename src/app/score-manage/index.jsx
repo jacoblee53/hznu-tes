@@ -6,7 +6,7 @@ import './index.less'
 class ScoreManage extends React.Component {
   render() {
     return (
-      <Card bordered={false}>
+      <Card title='成绩统计' bordered={false}>
 
       </Card>
     )

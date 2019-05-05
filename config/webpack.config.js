@@ -110,9 +110,9 @@ module.exports = function(webpackEnv) {
           loader: require.resolve(preProcessor),
           options: {
             sourceMap: isEnvProduction && shouldUseSourceMap,
-            modifyVars: { // 修稿主题
-              // 'primary-color': '#000000',
-              // 'link-color': '#3273DC',
+            modifyVars: { // 修改主题
+              'primary-color': '#5755d9',
+              'border-radius-base': '2px',
             },
             javascriptEnabled: true // 解决上文报错
           },

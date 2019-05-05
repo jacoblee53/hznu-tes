@@ -144,13 +144,13 @@ class EditTaskModal extends React.Component {
             )}
           </Form.Item>
 
-          <Form.Item {...formItemLayout} label='标准'>
+          <Form.Item {...formItemLayout} label='评价标准'>
             {getFieldDecorator('standard', {
-              rules: [{ required: true, message: '请选择标准' }],
+              rules: [{ required: true, message: '请选择评价标准' }],
               initialValue: data.standard || null
             })(
               <Select
-                placeholder='请选择标准'
+                placeholder='请选择评价标准'
                 disabled={isEdit(status)}
               >
                 {standards &&

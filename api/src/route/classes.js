@@ -3,8 +3,6 @@ import User from '../model/User'
 import express from 'express'
 import bcrypt from 'bcrypt'
 import authToken from '../middleware/authToken'
-import path from 'path'
-import fs from 'fs'
 
 const router = express.Router()
 

@@ -23,10 +23,10 @@ const taskSchema = new mongoose.Schema(
         ref: 'Class',
       },
     ],
-    standard: {
+    standards: [{
       type: Schema.Types.ObjectId,
       ref: 'Standard',
-    },
+    }],
     owner: {
       type: Schema.Types.ObjectId,
       ref: 'User',

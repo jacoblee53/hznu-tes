@@ -209,7 +209,7 @@ class ClassManage extends React.Component {
             style={mr}
             onClick={() => this.setState({ isNewClassModal: true})}
           >
-              添加班级
+            新建班级
           </Button>
           <Button type='primary' onClick={this.handleDownload}>下载示例</Button>
         </div>

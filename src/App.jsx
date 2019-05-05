@@ -63,6 +63,16 @@ class App extends React.Component {
                       path={urls.CLASS_MANAGE}
                       component={Loadable({ loader: () => import('./app/class-manage')})}
                     />
+                    <Route
+                      exact
+                      path={urls.MY_TASK}
+                      component={Loadable({ loader: () => import('./app/my-task')})}
+                    />
+                    <Route
+                      exact
+                      path={urls.MY_SCORE}
+                      component={Loadable({ loader: () => import('./app/my-score')})}
+                    />
                   </Switch>
                 </Dashboard>
               </div>

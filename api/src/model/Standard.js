@@ -3,13 +3,9 @@ import mongoose from 'mongoose'
 const Schema = mongoose.Schema
 
 const standardSchema = new mongoose.Schema({
-  standardName: {
+  title: {
     type: String,
     required: true,
-  },
-  tableId: {
-    type: Schema.Types.ObjectId,
-    ref: 'Table'
   }
 }, {
   timestamps: true,
