@@ -51,15 +51,12 @@ router.get('/delete', (req, res) => {
   const { id } = req.query
   Standard
     .deleteOne({ _id: id })
-    .then(e => {
-      if (!e) {
-        res.status(200).json({
-          code: 200,
-          msg: '删除成功'
-        })
-      } else {
-        throw Error()
-      }
+    .then(r => {
+      res.status(200).json({
+        code: 200,
+        msg: '删除成功',
+        data: r
+      })
     })
     .catch(e => {
       res.status(500).json({
@@ -132,15 +129,12 @@ router.get('/deleteSingle', (req, res) => {
   const { id } = req.query
   Single
     .deleteOne({ _id: id })
-    .then(e => {
-      if (!e) {
-        res.status(200).json({
-          code: 200,
-          msg: '删除成功'
-        })
-      } else {
-        throw Error()
-      }
+    .then(r => {
+      res.status(200).json({
+        code: 200,
+        data: r,
+        msg: '删除成功'
+      })
     })
     .catch(e => {
       res.status(500).json({

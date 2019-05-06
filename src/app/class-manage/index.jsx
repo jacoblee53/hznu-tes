@@ -217,7 +217,7 @@ class ClassManage extends React.Component {
         <Table
           rowKey='_id'
           bordered
-          size='middle'
+          size='small'
           loading={isLoading}
           dataSource={classes}
           columns={columns}

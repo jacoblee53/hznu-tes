@@ -19,6 +19,13 @@ class StandardManageActions extends BaseActions {
   }
 
   @action
+  async delete(params) {
+    let r = await this.get(apis.API_DELETE_STANDARD, params)
+    this.fetch()
+    return r
+  }
+
+  @action
   async create(params) {
     let r = await this.post(apis.API_CREATE_STANDARD, params, true)
     this.fetch()
