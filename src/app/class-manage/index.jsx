@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import { inject, observer } from 'mobx-react'
 import { Card, Table, Input, Button, Icon, Popconfirm, message } from 'antd'
 
@@ -201,18 +201,25 @@ class ClassManage extends React.Component {
       }
     ]
 
+    const extraContent = (
+      <Fragment>
+        <Button
+          type='primary'
+          style={mr}
+          onClick={() => this.setState({ isNewClassModal: true})}
+        >
+          新建班级
+        </Button>
+        <Button type='primary' onClick={this.handleDownload}>下载示例</Button>
+     </Fragment>
+    )
+
     return (
-      <Card title='班级管理' bordered={false}>
-        <div className='top-container'>
-          <Button
-            type='primary'
-            style={mr}
-            onClick={() => this.setState({ isNewClassModal: true})}
-          >
-            新建班级
-          </Button>
-          <Button type='primary' onClick={this.handleDownload}>下载示例</Button>
-        </div>
+      <Card
+        title='班级管理'
+        bordered={false}
+        extra={extraContent}
+      >
 
         <Table
           rowKey='_id'

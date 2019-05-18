@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal, Table, Alert } from 'antd'
+import { Modal, Table } from 'antd'
 
 import parseExcel from '../../../../util/parseExcel'
 import Excel from './Excel'
@@ -45,11 +45,6 @@ class ImportExcel extends React.Component {
         onOk={() => onOk(data)}
         okText='导入'
       >
-        <Alert
-          type='info'
-          message='初始密码为123456'
-          style={{marginBottom: 24}}
-        />
         <div className='excel-container'>
           <Excel getExcelData={this.handleGetExcelData} />
         </div>

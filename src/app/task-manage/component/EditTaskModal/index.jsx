@@ -6,13 +6,22 @@ import {
   InputNumber,
   DatePicker,
   Select,
-  Checkbox,
+  Switch,
   message
 } from 'antd'
 import moment from 'moment'
 import { inject, observer } from 'mobx-react'
 
 import './index.less'
+
+const showExpertStyle = {
+  position: 'static'
+}
+const hideExpertStyle = {
+  position: 'absolute',
+  top: 99999,
+  left: 99999,
+}
 
 const formItemLayout = {
   labelCol: { span: 7 },
@@ -50,10 +59,12 @@ class EditTaskModal extends React.Component {
   componentDidMount() {
     this.props.classManageActions.fetch()
     this.props.userActions.fetch({ role: 0 })
+    this.props.standardManageActions.fetch()
   }
 
-  handleCheck = () => {
-    this.setState({ isExpert: !this.state.isExpert })
+  handleCheck = e => {
+    console.log(e)
+    this.setState({ isExpert: e })
   }
 
   handleSubmit = e => {
@@ -93,10 +104,10 @@ class EditTaskModal extends React.Component {
       userStore,
       standardManageStore,
     } = this.props
+    const { isExpert } = this.state
     const { classes } = classManageStore
     const { experts } = userStore
     const { standards } = standardManageStore
-    const isChecked = data && data.experts && data.experts.length > 0 ? true : false
 
     return (
       <Modal
@@ -145,18 +156,19 @@ class EditTaskModal extends React.Component {
           </Form.Item>
 
           <Form.Item {...formItemLayout} label='评价标准'>
-            {getFieldDecorator('standard', {
+            {getFieldDecorator('standards', {
               rules: [{ required: true, message: '请选择评价标准' }],
-              initialValue: data.standard || null
+              initialValue: data.standards || []
             })(
               <Select
                 placeholder='请选择评价标准'
                 disabled={isEdit(status)}
+                mode='multiple'
               >
                 {standards &&
                   standards.map(item => (
                     <Select.Option value={item._id} key={item._id}>
-                      {item.standardName}
+                      {item.title}
                     </Select.Option>
                   ))}
               </Select>
@@ -212,17 +224,21 @@ class EditTaskModal extends React.Component {
 
           <Form.Item {...formItemLayout} label='添加专家'>
             {getFieldDecorator('isExpert', {
-              initialValue: isChecked
+              initialValue: data.isExpert || false,
+              valuePropName: 'checked',
             })(
-              <Checkbox
+              // <Checkbox
+              //   disabled={isEdit(status)}
+              //   onChange={this.handleCheck}
+              // />
+              <Switch
                 disabled={isEdit(status)}
-                defaultChecked={isChecked}
                 onChange={this.handleCheck}
               />
             )}
           </Form.Item>
 
-          <div className='expert-container'>
+          <div className='expert-container' style={(isExpert || data.isExpert) ? showExpertStyle : hideExpertStyle}>
             <Form.Item {...formItemLayout} label='选择专家'>
               {getFieldDecorator('experts', {
                 initialValue: data.experts || []

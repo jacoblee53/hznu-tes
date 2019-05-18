@@ -91,15 +91,20 @@ class StandardManage extends React.Component {
       )
     }]
 
+    const extraContent = (
+      <Button
+        type='primary'
+        onClick={() => this.setState({ isNewStandardModal: true})}
+      >
+        新建标准
+      </Button>
+    )
+
     return (
-      <Card title='标准管理' bordered={false}>
-        <Button
-          type='primary'
-          className='new-btn'
-          onClick={() => this.setState({ isNewStandardModal: true})}
-        >
-          新建标准
-        </Button>
+      <Card title='标准管理'
+        bordered={false}
+        extra={extraContent}
+      >
         <Table
           rowKey='_id'
           bordered
