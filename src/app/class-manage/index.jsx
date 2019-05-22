@@ -4,6 +4,7 @@ import { Card, Table, Input, Button, Icon, Popconfirm, message } from 'antd'
 
 import NewClass from './component/NewClass'
 import ImportExcel from './component/ImportExcel'
+import EditDrawer from './component/EditDrawer'
 import './index.less'
 
 const mr = {
@@ -23,6 +24,7 @@ class ClassManage extends React.Component {
       searchText: '',
       isNewClassModal: false,
       isImportModal: false,
+      isEditDrawer: false,
       currentClass: null,
     }
   }
@@ -46,8 +48,6 @@ class ClassManage extends React.Component {
     clearFilters()
     this.setState({ searchText: '' })
   }
-
-  handleEdit = () => {}
 
   handleDelete = record => {
     const id = record._id
@@ -81,7 +81,7 @@ class ClassManage extends React.Component {
   }
 
   render() {
-    const { isLoading, isNewClassModal, isImportModal } = this.state
+    const { isLoading, isNewClassModal, isImportModal, isEditDrawer, currentClass } = this.state
     const { classes } = this.store
 
     const columns = [
@@ -168,7 +168,7 @@ class ClassManage extends React.Component {
             <Button
               size='small'
               type='dashed'
-              onClick={() => this.handleEdit(record)}
+              onClick={() => this.setState({ isEditDrawer: true, currentClass: record })}
               style={mr}
             >
               <Icon type='edit' />
@@ -230,17 +230,23 @@ class ClassManage extends React.Component {
           columns={columns}
         />
 
-        <NewClass
+        {isNewClassModal && <NewClass
           visible={isNewClassModal}
           onOk={this.createClass}
           onCancel={() => this.setState({ isNewClassModal: false })}
-        />
+        />}
 
-        <ImportExcel
+        {isImportModal && <ImportExcel
           visible={isImportModal}
           onOk={this.importStudent}
           onCancel={() => this.setState({ isImportModal: false })}
-        />
+        />}
+
+        {isEditDrawer && <EditDrawer
+          currentClass={currentClass}
+          visible={isEditDrawer}
+          onClose={() => this.setState({ isEditDrawer: false})}
+        />}
       </Card>
     )
   }

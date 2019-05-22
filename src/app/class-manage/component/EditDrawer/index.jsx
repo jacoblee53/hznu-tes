@@ -1,25 +1,48 @@
 import React from 'react'
-import { Drawer, Table } from 'antd'
+import { Drawer, Table, Input, Icon, Button } from 'antd'
 import { inject, observer } from 'mobx-react'
 
-@inject('classManageActions')
+import './index.less'
+
+@inject('classManageActions', 'classManageStore')
 @observer
 class EditDrawer extends React.Component {
   constructor(props) {
     super(props)
     this.actions = props.classManageActions
+    this.store = props.classManageStore
+
+    const { currentClass } = this.props
+    this.classId = getValue(currentClass, '_id', false)
+  }
+
+  componentDidMount() {
+    this.classId && this.actions.fetchMember({ classId: this.classId })
   }
 
   handleRemove = uid => {
-
+    this.actions.removeMember({
+      id: uid,
+      classId: this.classId
+    })
   }
 
   handleResetPwd = uid => {
+    this.actions.resetPwd({
+      id: uid
+    })
+  }
 
+  handleAddMember = account => {
+    this.actions.addMember({
+      account,
+      classId: this.classId
+    })
   }
 
   render() {
-    const { visible, currentClass, students = [] } = this.props
+    const { visible, currentClass, onClose } = this.props
+    const { currentStudents } = this.store
 
     const columns = [
       {
@@ -39,10 +62,10 @@ class EditDrawer extends React.Component {
           return (
             <div>
               <Button.Group>
-                <Button size='small' onClick={() => handleResetPwd(record._id)}>
+                <Button size='small' onClick={() => this.handleResetPwd(record._id)}>
                   重置
                 </Button>
-                <Button size='small' onClick={() => handleRemove(record._id)}>
+                <Button size='small' onClick={() => this.handleRemove(record._id)}>
                   移除
                 </Button>
               </Button.Group>
@@ -54,17 +77,27 @@ class EditDrawer extends React.Component {
 
     return (
       <Drawer
-        title={`${currentClass.className}（共${students.length}人）`}
-        width={400}
+        title={(currentClass && `${currentClass.className}（共${currentStudents.length}人）`) || ''}
+        width={550}
         destroyOnClose
         visible={visible}
+        onClose={onClose}
       >
         <Table
-          dataSource={students}
+          dataSource={currentStudents}
           columns={columns}
           rowKey='_id'
           size='small'
         />
+        <div className='drawer-bottom-block'>
+          <Input.Search
+            className='search-stu-input'
+            prefix={<Icon type='user-add' style={{ color: 'rgba(0,0,0,.25)' }} />}
+            placeholder='请输入学号'
+            enterButton='添加'
+            onSearch={this.handleAddMember}
+          />
+        </div>
       </Drawer>
     )
   }

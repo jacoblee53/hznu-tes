@@ -10,6 +10,9 @@ import classManageActions from '../app/class-manage/action'
 import standardManageStore from '../app/standard-manage/store'
 import standardManageActions from '../app/standard-manage/action'
 
+import myTaskStore from '../app/my-task/store'
+import myTaskActions from '../app/my-task/action'
+
 export default {
   userStore,
   userActions,
@@ -22,4 +25,7 @@ export default {
 
   standardManageStore,
   standardManageActions,
+
+  myTaskStore,
+  myTaskActions,
 }

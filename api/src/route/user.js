@@ -1,6 +1,7 @@
 import User from '../model/User'
 import express from 'express'
 import authToken from '../middleware/authToken'
+import menu from '../util/menu'
 
 const router = express.Router()
 
@@ -64,7 +65,7 @@ router.post('/login', (req, res) => {
     })
 })
 
-router.post('/resetPwd', authToken, (req, res) => {
+router.post('/chanagePwd', authToken, (req, res) => {
   const {
     newPwd,
     oldPwd
@@ -73,17 +74,15 @@ router.post('/resetPwd', authToken, (req, res) => {
     _id
   } = req.currentUser
 
-  User.findOne({
-      _id,
-    })
+  User
+    .findOne({ _id })
     .then(r => {
       if (r.isValidPassword(oldPwd)) {
         r.setPassword(newPwd)
         r.save().then(() => {
           res.status(200).json({
             code: 200,
-            msg: '修改密码成功',
-            data: [],
+            data: []
           })
         })
       } else {
@@ -93,7 +92,27 @@ router.post('/resetPwd', authToken, (req, res) => {
     .catch(e => {
       res.status(500).json({
         code: -1,
-        msg: '修改密码失败',
+        data: e,
+      })
+    })
+})
+
+router.get('/resetPwd', (req, res) => {
+  const { id } = req.query
+  User
+    .findOne({ _id: id })
+    .then(r => {
+      r.setPassword('123456')
+      r.save().then(() => {
+        res.status(200).json({
+          code: 200,
+          data: []
+        })
+      })
+    })
+    .catch(e => {
+      res.status(500).json({
+        code: -1,
         data: e,
       })
     })
@@ -123,70 +142,10 @@ router.get('/fetch', (req, res) => {
 router.get('/menu', (req, res) => {
   const role = parseInt(req.query.role)
 
-  if (role === 0) {
+  if (role === 0 || role === 1 || role === 2) {
     res.status(200).json({
       code: 200,
-      data: [{
-          title: '打分评价',
-          icon: 'form',
-          path: '/evaluate'
-        },
-        {
-          title: '成绩统计',
-          icon: 'dashboard',
-          path: '/scoremanage'
-        }
-      ]
-    })
-  } else if (role === 1) {
-    res.status(200).json({
-      code: 200,
-      data: [{
-          title: '任务管理',
-          icon: 'project',
-          path: '/taskmanage'
-        },
-        {
-          title: '打分评价',
-          icon: 'form',
-          path: '/evaluate'
-        },
-        {
-          title: '成绩统计',
-          icon: 'dashboard',
-          path: '/scoremanage'
-        },
-        {
-          title: '标准管理',
-          icon: 'calculator',
-          path: '/standardmanage'
-        },
-        {
-          title: '班级管理',
-          icon: 'team',
-          path: '/classmanage'
-        }
-      ]
-    })
-  } else if (role === 2) {
-    res.status(200).json({
-      code: 200,
-      data: [{
-          title: '我的任务',
-          icon: 'folder-open',
-          path: '/mytask'
-        },
-        {
-          title: '打分评价',
-          icon: 'form',
-          path: '/evaluate'
-        },
-        {
-          title: '我的成绩',
-          icon: 'audit',
-          path: '/myscore'
-        }
-      ]
+      data: menu[role]
     })
   } else {
     res.status(500).json({

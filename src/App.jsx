@@ -37,7 +37,10 @@ class App extends React.Component {
               <div className='app-root'>
                 <Dashboard>
                   <Switch>
-                    <Route exact path={urls.HOME} />
+                    <Route
+                      exact
+                      path={urls.HOME}
+                    />
                     <Route
                       exact
                       path={urls.TASK_MANAGE}

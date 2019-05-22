@@ -1,8 +1,7 @@
 import { observable } from 'mobx'
 
 class Store {
-  @observable classes = []
-  @observable currentStudents = []
+  @observable tasks = []
 }
 
 export default new Store()

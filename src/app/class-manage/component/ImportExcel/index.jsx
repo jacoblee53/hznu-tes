@@ -42,6 +42,7 @@ class ImportExcel extends React.Component {
         destroyOnClose
         visible={visible}
         onCancel={onCancel}
+        style={{top: 20}}
         onOk={() => onOk(data)}
         okText='导入'
       >

@@ -3,7 +3,6 @@ import { message } from 'antd'
 import BaseActions from '../../../component/BaseActions'
 import * as apis from '../constant/apis'
 import store from '../store'
-import filesaver from 'file-saver'
 
 class TaskManageActions extends BaseActions {
   constructor(store) {
@@ -45,6 +44,42 @@ class TaskManageActions extends BaseActions {
   @action
   async download() {
     await this.get(apis.API_DOWNLOAD_SAMPLE)
+  }
+
+  @action
+  async fetchMember(params) {
+    let r = await this.get(apis.API_FETCH_MEMEBER, params)
+    runInAction(() => {
+      this.store.currentStudents = r
+    })
+    return r
+  }
+
+  @action
+  async addMember(params) {
+    let r = await this.post(apis.API_ADD_MEMEBER, params)
+    this.fetchMember({
+      classId: params.classId
+    })
+    return r
+  }
+
+  @action
+  async removeMember(params) {
+    let r = await this.post(apis.API_REMOVE_MEMEBER, params)
+    this.fetchMember({
+      classId: params.classId
+    })
+    return r
+  }
+
+  @action
+  async resetPwd(params) {
+    let r = await this.get(apis.API_RESET_PWD, params, true)
+    if (r.code === 200) {
+      message.success('重置成功')
+    }
+    return r
   }
 }
 

@@ -107,15 +107,65 @@ router.post('/import', (req, res) => {
 
 })
 
-router.get('/remove', (req, res) => {
-  const id = req.query.id
+
+router.get('/fetchMember', (req, res) => {
+  const { classId } = req.query
 
   User
-    .findOneAndUpdate(w)
+    .find({ classId })
     .then(r => {
-
+      res.status(200).json({
+        code: 200,
+        data: r
+      })
     })
+    .catch(e => {
+      res.status(500).json({
+        code: -1,
+        data: e
+      })
+    })
+})
 
+router.post('/addMember', (req, res) => {
+  const { account, classId } = req.body
+  User
+    .findOneAndUpdate({ account }, {$set: {
+      classId
+    }})
+    .then(r => {
+      res.status(200).json({
+        code: 200,
+        data: r
+      })
+    })
+    .catch(e => {
+      res.status(500).json({
+        code: -1,
+        data: e
+      })
+    })
+})
+
+router.post('/removeMember', (req, res) => {
+  const { id } = req.body
+
+  User
+    .findOneAndUpdate({ _id: id }, {$set: {
+      classId: null
+    }})
+    .then(r => {
+      res.status(200).json({
+        code: 200,
+        data: r
+      })
+    })
+    .catch(e => {
+      res.status(500).json({
+        code: -1,
+        data: e
+      })
+    })
 })
 
 export default router
