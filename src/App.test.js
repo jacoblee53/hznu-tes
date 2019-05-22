@@ -1,9 +1,21 @@
 import React from 'react'
-import ReactDOM from 'react-dom'
-import App from './App'
+import { mount } from 'enzyme'
+import renderer from 'react-test-renderer'
+import injects from './inject'
+import App from './app'
 
-it('renders without crashing', () => {
-  const div = document.createElement('div')
-  ReactDOM.render(<App />, div)
-  ReactDOM.unmountComponentAtNode(div)
+let wrappedComponent = <App {...injects} />
+
+let wrapper
+
+describe('src/app.test.js', () => {
+  it('should render correctly', () => {
+    wrapper = mount(wrappedComponent)
+    expect(wrapper.html()).toBeTruthy()
+  })
+
+  it('should matchSnapshot', () => {
+    const tree = renderer.create(wrappedComponent)
+    expect(tree).toMatchSnapshot()
+  })
 })

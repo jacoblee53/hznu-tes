@@ -24,7 +24,7 @@ class LoginForm extends React.Component {
     this.props.form.validateFields(async(err, values) => {
       if (!err) {
         let r = await this.actions.login(values)
-        if (r.code === 200) {
+        if (r && r.code === 200) {
           window.location.assign(
             location.origin + location.pathname + '#' + '/home'
           )

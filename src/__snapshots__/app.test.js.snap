@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/app.test.js should matchSnapshot 1`] = `
+<div
+  style={
+    Object {
+      "height": "100vh",
+      "width": "100%",
+    }
+  }
+>
+  <div
+    style={
+      Object {
+        "WebkitBoxAlign": "center",
+        "alignItems": "center",
+        "display": "flex",
+        "height": "100%",
+        "justifyContent": "center",
+        "width": "100%",
+      }
+    }
+  >
+    <div
+      className="sk-spinner line-scale-pulse-out-rapid"
+      color="#5282ef"
+      style={
+        Object {
+          "color": "#5282ef",
+        }
+      }
+    >
+      <div />
+      <div />
+      <div />
+      <div />
+      <div />
+    </div>
+  </div>
+</div>
+`;

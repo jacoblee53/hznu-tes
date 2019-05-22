@@ -13,7 +13,7 @@ class UserActions extends BaseActions {
   @action
   async login(params) {
     let r = await this.post(apis.API_USER_LOGIN, params, true)
-    if (r.code === 200) {
+    if (r && r.code === 200) {
       let token = r.data.token
       jwt.saveToken(token)
 
