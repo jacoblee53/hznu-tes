@@ -5,9 +5,12 @@ import { configure } from 'mobx'
 import { LocaleProvider } from 'antd'
 import zhCN from 'antd/lib/locale-provider/zh_CN'
 import 'moment/locale/zh-cn'
+import getValue from './util/getValue'
 
 import App from './app'
 import injects from './inject'
+
+window.getValue = getValue
 
 configure({ enforceActions: 'observed' })
 
