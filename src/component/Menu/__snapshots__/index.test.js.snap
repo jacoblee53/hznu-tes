@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`src/app/my-task/component/index.test.js should matchSnapshot 1`] = `
+<aside
+  className="ant-layout-sider ant-layout-sider-dark"
+  style={
+    Object {
+      "flex": "0 0 256px",
+      "maxWidth": "256px",
+      "minWidth": "256px",
+      "width": "256px",
+    }
+  }
+>
+  <div
+    className="ant-layout-sider-children"
+  >
+    <div
+      className="logo"
+    >
+      <a
+        href="/"
+      >
+        <img
+          src="logo.png"
+        />
+        <h1>
+          学科竞赛评价系统
+        </h1>
+      </a>
+    </div>
+    <ul
+      className="ant-menu menu ant-menu-dark ant-menu-root ant-menu-inline"
+      onMouseEnter={[Function]}
+      onTransitionEnd={[Function]}
+      role="menu"
+      style={Object {}}
+    >
+      <div
+        className="version"
+      >
+        v 
+        1.0.0
+      </div>
+    </ul>
+  </div>
+</aside>
+`;
