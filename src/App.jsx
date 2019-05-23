@@ -29,7 +29,7 @@ class App extends React.Component {
           <Route
             exact
             path={urls.LOGIN}
-            component={Loadable({ loader: () => import('./app/login')})}
+            component={Loadable({ loader: () => import('./app/login') })}
           />
           <Route
             path='/'
@@ -44,37 +44,42 @@ class App extends React.Component {
                     <Route
                       exact
                       path={urls.TASK_MANAGE}
-                      component={Loadable({ loader: () => import('./app/task-manage')})}
+                      component={Loadable({ loader: () => import('./app/task-manage') })}
                     />
                     <Route
                       exact
                       path={urls.EVALUATE}
-                      component={Loadable({ loader: () => import('./app/evaluate')})}
+                      component={Loadable({ loader: () => import('./app/evaluate') })}
                     />
                     <Route
                       exact
                       path={urls.SCORE_MANAGE}
-                      component={Loadable({ loader: () => import('./app/score-manage')})}
+                      component={Loadable({ loader: () => import('./app/score-manage') })}
                     />
                     <Route
                       exact
                       path={urls.STANDARD_MANAGE}
-                      component={Loadable({ loader: () => import('./app/standard-manage')})}
+                      component={Loadable({ loader: () => import('./app/standard-manage') })}
                     />
                     <Route
                       exact
                       path={urls.CLASS_MANAGE}
-                      component={Loadable({ loader: () => import('./app/class-manage')})}
+                      component={Loadable({ loader: () => import('./app/class-manage') })}
                     />
                     <Route
                       exact
                       path={urls.MY_TASK}
-                      component={Loadable({ loader: () => import('./app/my-task')})}
+                      component={Loadable({ loader: () => import('./app/my-task') })}
+                    />
+                    <Route
+                      exact
+                      path={urls.MY_TASK_ID}
+                      component={Loadable({ loader: () => import('./app/my-task/component/DoTask') })}
                     />
                     <Route
                       exact
                       path={urls.MY_SCORE}
-                      component={Loadable({ loader: () => import('./app/my-score')})}
+                      component={Loadable({ loader: () => import('./app/score-manage') })}
                     />
                   </Switch>
                 </Dashboard>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { Layout, Row, Col, Dropdown, Icon, Menu, Avatar, Modal } from 'antd'
+import { Layout, Row, Col, Dropdown, Icon, Menu, Avatar, Modal, BackTop } from 'antd'
 
 import DashMenu from '../Menu/index'
 import config from '../../util/config'
@@ -16,7 +16,8 @@ class Dashboard extends React.Component {
 
     this.state = {
       collapsed: false,
-      menu: []
+      menu: [],
+      isShowModal: false
     }
 
     this.fetchMenu()
@@ -56,6 +57,10 @@ class Dashboard extends React.Component {
     })}
   }
 
+  showPwdModal = () => {
+    this.setState({ isShowModal: true })
+  }
+
   render() {
     const { collapsed, menu } = this.state
     const { user } = this.store
@@ -64,6 +69,11 @@ class Dashboard extends React.Component {
         <Menu.Item>
           <span onClick={this.showPersonalInfo}>
             <Icon type='user' /> <span>个人信息</span>
+          </span>
+        </Menu.Item>
+        <Menu.Item>
+          <span onClick={this.showPwdModal}>
+            <Icon type='lock' /> <span>修改密码</span>
           </span>
         </Menu.Item>
         <Menu.Item>
@@ -101,6 +111,7 @@ class Dashboard extends React.Component {
             {this.props.children}
           </Layout.Content>
         </Layout>
+        <BackTop />
       </Layout>
     )
   }

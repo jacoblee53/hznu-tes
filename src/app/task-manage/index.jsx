@@ -25,7 +25,6 @@ class TaskManage extends React.Component {
   }
 
   handleSearch = e => {
-    console.log(e)
     this.props.taskManageActions.search({
       query: e
     })
@@ -41,15 +40,15 @@ class TaskManage extends React.Component {
     const { listLoading, status, isModalVisible, currentTask } = this.state
     const { tasks } = this.props.taskManageStore
 
-    const ListContent = ({ data: { startDate, endDate, taskClass } }) => (
+    const ListContent = ({ data: { startDate, endDate } }) => (
       <div className='list-content'>
         <div>
           <span>起始日期：</span>
-          {moment(startDate).format('YYYY-MM-DD')}
+          {moment(startDate).format('YYYY-MM-DD hh:mm')}
         </div>
         <div>
           <span>截止日期：</span>
-          {moment(endDate).format('YYYY-MM-DD')}
+          {moment(endDate).format('YYYY-MM-DD hh:mm')}
         </div>
       </div>
     )

@@ -10,10 +10,33 @@ class MyTaskActions extends BaseActions {
   }
 
   @action
-  async fetch() {
-    let r = await this.get(apis.API_FETCH_TASK)
+  setCurrentTask(task) {
+    this.store.currentTask = task
+  }
+
+  @action
+  async fetchMyTask() {
+    let r = await this.get(apis.API_FETCH_MYTASK)
     runInAction(() =>{
-      this.store.tasks = r
+      this.store.myTasks = r
+    })
+    return r
+  }
+
+  @action
+  async fetchCurrentTask(params) {
+    let r = await this.get(apis.API_FETCH_TASK, params)
+    runInAction(() => {
+      this.store.currentTask = r
+    })
+    return r
+  }
+
+  @action
+  async fetchCurrentDotask(params) {
+    let r = await this.get(apis.API_FETCH_DOTASK, params)
+    runInAction(() => {
+      this.store.currentDotask = r
     })
     return r
   }

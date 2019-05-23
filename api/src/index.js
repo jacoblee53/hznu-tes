@@ -15,13 +15,13 @@ import doeval from './route/doeval'
 
 const app = express()
 
-app.use('/public', express.static('public'))
-
 app.use(cors())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(logger('dev'))
 app.use(cookieParser())
+app.use(express.static(__dirname + '/'))
+app.use('/public', express.static('public'))
 
 app.use('/user', user)
 app.use('/task', task)

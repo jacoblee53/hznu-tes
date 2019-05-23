@@ -8,6 +8,11 @@ const dotaskSchema = new mongoose.Schema({
     ref: 'Task',
     required: true,
   },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+    required: true,
+  },
   docPath: {
     type: String,
     default: ''
@@ -19,15 +24,6 @@ const dotaskSchema = new mongoose.Schema({
   mediaPath: {
     type: String,
     default: ''
-  },
-  docUploadDate: {
-    type: Date
-  },
-  pptUploadDate: {
-    type: Date
-  },
-  mediatUploadDate: {
-    type: Date
   }
 }, {
   timestamps: true,

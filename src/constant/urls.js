@@ -14,4 +14,6 @@ export const CLASS_MANAGE = '/classmanage'
 
 export const MY_TASK = '/mytask'
 
+export const MY_TASK_ID = '/mytask/:id'
+
 export const MY_SCORE = '/myscore'
