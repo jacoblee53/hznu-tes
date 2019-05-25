@@ -69,7 +69,7 @@ class TaskManage extends React.Component {
     )
 
     return (
-      <Card title='任务管理' bordered={false} extra={extraContent}>
+      <Card title='任务管理' bordered={false} extra={extraContent} className='main-content-card'>
         <Button
           type='dashed'
           icon='plus'

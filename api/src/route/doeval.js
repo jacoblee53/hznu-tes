@@ -2,7 +2,6 @@ import Doeval from '../model/Doeval'
 import authToken from '../middleware/authToken'
 import express from 'express'
 
-
 const router = express.Router()
 
 router.get('/fetch', authToken, (req, res) => {
@@ -10,6 +9,21 @@ router.get('/fetch', authToken, (req, res) => {
 
   Doeval
     .find({ owner })
+    .populate([{
+      path: 'dotaskId',
+      model: 'Dotask',
+      populate: [{
+        path: 'task',
+        model: 'Task',
+        populate: [{
+          path: 'standards',
+          model: 'Standard'
+        }]
+      }, {
+        path: 'owner',
+        model: 'User'
+      }]
+    }])
     .sort([['createdAt', -1]])
     .exec()
     .then(r => {

@@ -13,8 +13,8 @@ import standardManageActions from '../app/standard-manage/action'
 import myTaskStore from '../app/my-task/store'
 import myTaskActions from '../app/my-task/action'
 
-import EvalStore from '../app/evaluate/store'
-import EvalActions from '../app/evaluate/action'
+import evalStore from '../app/evaluate/store'
+import evalActions from '../app/evaluate/action'
 
 export default {
   userStore,
@@ -32,6 +32,6 @@ export default {
   myTaskStore,
   myTaskActions,
 
-  EvalStore,
-  EvalActions,
+  evalStore,
+  evalActions,
 }

@@ -17,7 +17,7 @@ class ScoreManage extends React.Component {
     const role = getValue(user, 'role', false)
 
     return (
-      <Card title={role === 2 ? '我的成绩' : '成绩统计'} bordered={false}>
+      <Card className='main-content-card' title={role === 2 ? '我的成绩' : '成绩统计'} bordered={false}>
 
       </Card>
     )

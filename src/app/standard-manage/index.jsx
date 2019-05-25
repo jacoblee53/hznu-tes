@@ -104,6 +104,7 @@ class StandardManage extends React.Component {
       <Card title='标准管理'
         bordered={false}
         extra={extraContent}
+        className='main-content-card'
       >
         <Table
           rowKey='_id'

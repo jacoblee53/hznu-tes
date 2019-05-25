@@ -6,6 +6,7 @@ import Dashboard from './component/Dashboard'
 import * as urls from './constant/urls.js'
 import jwt from './util/token'
 import Loadable from './component/Loadable'
+import './less/global.less'
 
 @inject('userActions')
 @observer
@@ -50,6 +51,11 @@ class App extends React.Component {
                       exact
                       path={urls.EVALUATE}
                       component={Loadable({ loader: () => import('./app/evaluate') })}
+                    />
+                    <Route
+                      exact
+                      path={urls.EVALUATE_ID}
+                      component={Loadable({ loader: () => import('./app/evaluate/component/DoEval') })}
                     />
                     <Route
                       exact

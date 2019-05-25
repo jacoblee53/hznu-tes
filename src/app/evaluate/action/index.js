@@ -11,9 +11,11 @@ class EvalActions extends BaseActions {
 
   @action
   async fetch() {
+    this.store.isLoading = true
     let r = await this.get(apis.API_FETCH_DOEVAL)
     runInAction(() => {
       this.store.evals = r
+      this.store.isLoading = false
     })
     return r
   }

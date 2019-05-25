@@ -95,8 +95,8 @@
     "pretty-quick": "^1.10.0"
   },
   "scripts": {
-    "start": "NODE_ENV=development node scripts/start.js",
-    "build": "NODE_ENV=development node scripts/build.js",
+    "start": "REACT_APP_MY_VAR=development node scripts/start.js",
+    "build": "NODE_ENV=production REACT_APP_MY_VAR=production node scripts/build.js",
     "test": "NODE_ENV=test node scripts/test.js",
     "coverage": "npm run test -- --coverage"
   },

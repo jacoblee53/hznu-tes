@@ -6,6 +6,8 @@ export const TASK_MANAGE = '/taskmanage'
 
 export const EVALUATE = '/evaluate'
 
+export const EVALUATE_ID = '/evaluate/:id'
+
 export const STANDARD_MANAGE = '/standardmanage'
 
 export const SCORE_MANAGE = '/scoremanage'

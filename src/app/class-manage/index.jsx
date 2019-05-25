@@ -2,6 +2,7 @@ import React, { Fragment } from 'react'
 import { inject, observer } from 'mobx-react'
 import { Card, Table, Input, Button, Icon, Popconfirm, message } from 'antd'
 
+import { API_SERVER } from '../../constant/apis'
 import NewClass from './component/NewClass'
 import ImportExcel from './component/ImportExcel'
 import EditDrawer from './component/EditDrawer'
@@ -21,11 +22,11 @@ class ClassManage extends React.Component {
 
     this.state = {
       isLoading: false,
-      searchText: '',
-      isNewClassModal: false,
-      isImportModal: false,
       isEditDrawer: false,
+      isImportModal: false,
+      isNewClassModal: false,
       currentClass: null,
+      searchText: '',
     }
   }
 
@@ -77,7 +78,7 @@ class ClassManage extends React.Component {
   }
 
   handleDownload = () => {
-    this.actions.download()
+    window.open(API_SERVER + '/public/sample/sample.xlsx', '_blank')
   }
 
   render() {
@@ -219,8 +220,8 @@ class ClassManage extends React.Component {
         title='班级管理'
         bordered={false}
         extra={extraContent}
+        className='main-content-card'
       >
-
         <Table
           rowKey='_id'
           bordered

@@ -16,9 +16,11 @@ class MyTaskActions extends BaseActions {
 
   @action
   async fetchMyTask() {
+    this.store.isLoading = true
     let r = await this.get(apis.API_FETCH_MYTASK)
     runInAction(() =>{
       this.store.myTasks = r
+      this.store.isLoading = false
     })
     return r
   }

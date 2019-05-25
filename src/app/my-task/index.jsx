@@ -39,7 +39,7 @@ class Evaluate extends React.Component {
 
   render() {
     const { myTaskStore } = this.props
-    const { myTasks } = myTaskStore
+    const { myTasks, isLoading } = myTaskStore
     const ListFooter = <div />
     const ListContent = ({ data: { startDate, endDate } }) => (
       <div className='list-content'>
@@ -55,8 +55,9 @@ class Evaluate extends React.Component {
     )
 
     return (
-      <Card title='我的任务' bordered={false}>
+      <Card title='我的任务' bordered={false} className='main-content-card'>
         <List
+          loading={isLoading}
           size='small'
           pagination={{ pageSize: 6 }}
           dataSource={myTasks}
