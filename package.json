@@ -129,6 +129,7 @@
     "resolver": "jest-pnp-resolver",
     "setupFiles": [
       "react-app-polyfill/jsdom",
+      "<rootDir>/test/global.js",
       "<rootDir>/test/setupTest.js",
       "jest-canvas-mock"
     ],

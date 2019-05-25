@@ -1,8 +1,10 @@
 import Task from '../model/Task'
+import Dotask from '../model/Dotask'
 import express from 'express'
 import authToken from '../middleware/authToken'
 import taskPrivilege from '../middleware/taskPrivilege'
-import User from '../model/User';
+import User from '../model/User'
+import getUserData from '../util/getUserdata'
 
 const router = express.Router()
 
@@ -42,14 +44,19 @@ router.post('/create', taskPrivilege, (req, res) => {
     expertRatio: isExpert ? expertRatio : 0,
   })
 
-  task
-    .save()
+  User
+    .find({ role: 2, classId: { $in: taskClass } })
     .then(r => {
-      res.status(200).json({
-        code: 200,
-        msg: '新建任务成功',
-        data: r,
-      })
+      task.userData = getUserData(r, taskSize)
+      task
+        .save()
+        .then(r => {
+          res.status(200).json({
+            code: 200,
+            msg: '新建任务成功',
+            data: r,
+          })
+        })
     })
     .catch(e => {
       res.status(500).json({
@@ -58,6 +65,7 @@ router.post('/create', taskPrivilege, (req, res) => {
         msg: '新建任务失败',
       })
     })
+
 })
 
 router.get('/fetch',  (req, res) => {
@@ -198,24 +206,25 @@ router.post('/update', (req, res) => {
     })
 })
 
-router.get('/delete', taskPrivilege, (req, res) => {
+router.get('/delete', (req, res) => {
   const id = req.query.id
 
   Task
     .deleteOne({ _id: id })
     .then(e => {
-      if (!e) {
-        res.status(200).json({
-          code: 200,
-          msg: '删除任务成功'
+      Dotask
+        .deleteMany({ task: id })
+        .then(e => {
+          res.status(200).json({
+            code: 200,
+            msg: '删除任务成功'
+          })
         })
-      } else {
-        throw Error()
-      }
     })
     .catch(e => {
       res.status(500).json({
         code: -1,
+        data: e,
         msg: '删除任务失败'
       })
     })

@@ -36,6 +36,11 @@ class TaskManage extends React.Component {
       <Tag className='status-tag' color='#32b643'>进行中</Tag>
   }
 
+  deleteTask = id => {
+    console.log(id)
+    this.props.taskManageActions.delete({ id })
+  }
+
   render() {
     const { listLoading, status, isModalVisible, currentTask } = this.state
     const { tasks } = this.props.taskManageStore
@@ -91,7 +96,7 @@ class TaskManage extends React.Component {
               key={item._id}
               actions={[
                 <a onClick={() => this.setState({ isModalVisible: true, status: 'edit', currentTask: item })}>编辑</a>,
-                <a>删除</a>
+                <a onClick={() => this.deleteTask(item._id)}>删除</a>
               ]}
             >
               <List.Item.Meta

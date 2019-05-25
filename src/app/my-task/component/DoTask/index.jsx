@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Upload, Icon, Divider, Row, Col, Tag, Statistic } from 'antd'
+import { Card, Upload, Icon, Divider, Row, Col, Tag } from 'antd'
 import { inject, observer } from 'mobx-react'
 import moment from 'moment'
 
@@ -62,16 +62,18 @@ class DoTask extends React.Component {
   }
 
   render() {
-    const { currentDotask, currentTask } = this.props.myTaskStore
-    const userId = this.props.userStore.user.id
-    const taskId = currentTask._id
+    const { myTaskStore, userStore } = this.props
+    const { currentDotask, currentTask } = myTaskStore
     const { taskDesc, taskName, endDate } = currentTask
     const { docPath, pptPath, mediaPath } = currentDotask
+    const userId = getValue(userStore, 'user.id', '')
+    const taskId = currentTask && currentTask._id
     const isEnd = moment() > moment(endDate)
+
     const extraContent = (
       <div style={{display: 'flex'}}>
         {isEnd ?  <Tag color='#e85600'>已截止</Tag> : <Tag color='#32b643'>进行中</Tag>}
-        {/* <Statistic.Countdown className='countdown' value={endDate} format='D天H时m分' /> */}
+        {moment(endDate).format('YYYY-MM-DD hh:mm')}
       </div>
     )
 

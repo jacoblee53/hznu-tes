@@ -1,8 +1,6 @@
 import express from 'express'
 import Dotask from '../model/Dotask'
-import { API_SERVER } from '../util/config'
-import fs from 'fs'
-import path from 'path'
+import Task from '../model/Task'
 
 import authToken from '../middleware/authToken'
 import * as multerUpload from '../util/upload'
@@ -29,6 +27,13 @@ router.get('/fetch', authToken, (req, res) => {
         dotask
           .save()
           .then(r => {
+            const selfId = owner
+            const dotaskId = r._id
+            Task
+              .findOne({ _id: taskId })
+              .then(task => {
+                task.createEval(selfId, dotaskId)
+              })
             res.status(200).json({
               code: 200,
               data: r
@@ -58,8 +63,8 @@ router.post('/doc', multerUpload.docUpload.single('doc'), (req, res) => {
   const path = req.file.path
   Dotask
     .findOneAndUpdate(
-      {task: taskId, owner: userId},
-      {$set: { docPath: path}},
+      { task: taskId, owner: userId },
+      { $set: { docPath: path} },
       { new: true }
     )
     .then(r => {
@@ -82,8 +87,8 @@ router.post('/ppt', multerUpload.pptUpload.single('ppt'), (req, res) => {
   const path = req.file.path
   Dotask
     .findOneAndUpdate(
-      {task: taskId, owner: userId},
-      {$set: { pptPath: path }},
+      { task: taskId, owner: userId },
+      { $set: { pptPath: path  }},
       { new: true }
     )
     .then(r => {
@@ -106,8 +111,8 @@ router.post('/media', multerUpload.mediaUpload.single('media'), (req, res) => {
   const path = req.file.path
   Dotask
     .findOneAndUpdate(
-      {task: taskId, owner: userId},
-      {$set: { mediaPath: path }},
+      { task: taskId, owner: userId },
+      { $set: { mediaPath: path }},
       { new: true }
     )
     .then(r => {

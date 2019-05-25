@@ -40,6 +40,13 @@ class TaskManageActions extends BaseActions {
     })
     return r
   }
+
+  @action
+  async delete(params) {
+    let r = await this.get(apis.API_DELETE_TASK, params)
+    this.fetch()
+    return r
+  }
 }
 
 export default new TaskManageActions(store)
