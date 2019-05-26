@@ -11,9 +11,11 @@ class StandardManageActions extends BaseActions {
 
   @action
   async fetch() {
+    this.store.isLoading = true
     let r = await this.get(apis.API_FETCH_STANDARD)
     runInAction(() =>{
       this.store.standards = r
+      this.store.isLoading = false
     })
     return r
   }
@@ -40,8 +42,8 @@ class StandardManageActions extends BaseActions {
   }
 
   @action
-  async fetchSingle() {
-    let r = await this.get(apis.API_FETCH_STANDARD, params)
+  async fetchSingle(params) {
+    let r = await this.get(apis.API_FETCH_SINGLE, params)
     runInAction(() =>{
       this.store.singles = r
     })
@@ -51,7 +53,15 @@ class StandardManageActions extends BaseActions {
   @action
   async createSingle(params) {
     let r = await this.post(apis.API_CREATE_SINGLE, params, true)
-    this.fetchSingle()
+    this.fetchSingle({
+      standardId: params.standardId
+    })
+    return r
+  }
+
+  @action
+  async deleteSingle(params) {
+    let r = await this.get(apis.API_DELETE_SINGLE, params)
     return r
   }
 

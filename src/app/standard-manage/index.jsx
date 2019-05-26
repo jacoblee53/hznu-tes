@@ -4,6 +4,7 @@ import { inject, observer } from 'mobx-react'
 import moment from 'moment'
 
 import NewStandard from './component/NewStandard'
+import EditModal from './component/EditModal'
 import './index.less'
 
 const mr = {
@@ -19,7 +20,9 @@ class StandardManage extends React.Component {
     this.store = props.standardManageStore
 
     this.state = {
-      isNewStandardModal: false
+      isNewStandardModal: false,
+      isEditModal: false,
+      current: {}
     }
   }
 
@@ -36,7 +39,7 @@ class StandardManage extends React.Component {
   }
 
   handleEdit = record => {
-
+    this.setState({ isEditModal: true, current: record })
   }
 
   handleDelete = record => {
@@ -46,8 +49,8 @@ class StandardManage extends React.Component {
   }
 
   render() {
-    const { standards } = this.store
-    const { isNewStandardModal } = this.state
+    const { standards, isLoading } = this.store
+    const { isNewStandardModal, isEditModal, current } = this.state
     const columns = [{
       title: '标题',
       dataIndex: 'title',
@@ -107,6 +110,7 @@ class StandardManage extends React.Component {
         className='main-content-card'
       >
         <Table
+          loading={isLoading}
           rowKey='_id'
           bordered
           size='small'
@@ -114,11 +118,18 @@ class StandardManage extends React.Component {
           columns={columns}
         />
 
-        <NewStandard
+        {isEditModal && <EditModal
+          data={current}
+          visible={isEditModal}
+          onCancel={() => this.setState({isEditModal: false})}
+          {...this.props}
+        />}
+
+        {isNewStandardModal && <NewStandard
           visible={isNewStandardModal}
           onOk={this.createStandard}
           onCancel={() => this.setState({ isNewStandardModal: false })}
-        />
+        />}
       </Card>
     )
   }

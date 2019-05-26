@@ -26,12 +26,10 @@ router.get('/fetch', (req, res) => {
     })
 })
 
-router.get('/fetch', (req, res) => {
-  const { id } = req.query
+router.get('/fetchSingle', (req, res) => {
+  const { standardId } = req.query
   Single
-    .find({ standardId: id })
-    .sort([['createdAt', -1]])
-    .exec()
+    .find({ standardId })
     .then(r => {
       res.status(200).json({
         code: 200,
@@ -106,10 +104,10 @@ router.post('/createSingle', (req, res) => {
 })
 
 router.post('/updateSingle', (req, res) => {
-  const { title, content, point, standardId, singleId } = req.body
+  const { title, content, point, _id } = req.body
   Single
-    .findOneAndUpdate({ _id: singleId }, {$set: {
-      title, content, point, standardId
+    .findOneAndUpdate({ _id }, {$set: {
+      title, content, point
     }})
     .then(r => {
       res.status(200).json({

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Modal } from 'antd'
+import { Modal, Button } from 'antd'
 
 import SingleTable from '../SingleTable'
 
@@ -10,8 +10,7 @@ class EditModal extends React.Component {
   }
 
   render() {
-    const { visible, onCancel, standardManageStore } = this.props
-    const { singles } = standardManageStore
+    const { visible, onCancel } = this.props
 
     return (
       <Modal
@@ -24,9 +23,7 @@ class EditModal extends React.Component {
         style={{ top: 20 }}
         width={'90%'}
       >
-        <SingleTable
-          dataSource={singles}
-        />
+        <SingleTable {...this.props}/>
       </Modal>
     )
   }

@@ -77,26 +77,38 @@ const taskSchema = new mongoose.Schema(
   },
 )
 
+function rnd(n, m) {
+	var random = Math.floor(Math.random()*(m-n+1)+n)
+	return random
+}
+
 taskSchema.methods.createEval = function createEval(selfId, dotaskId) {
-  var list = _.sampleSize(_.without(_.uniq([...this.userData]), selfId), (this.taskSize - 1))
-  list.push(this.owner)
-  list.push(selfId)
-  if (this.isExpert) list.concat(this.experts)
+  var res = []
+  var count = this.taskSize
 
-  console.log(list)
+  res.push(selfId)
+  res.push(this.owner)
+  if (this.isExpert) res.concat(this.experts)
 
-  list.map(item => {
+  while(1) {
+    var i = rnd(0, this.userData.length - 1)
+    if (!res.includes(this.userData[i])) {
+      res.push(this.userData[i])
+      count --
+      if (count < 2) break
+    }
+  }
+
+  res.map(item => {
     const doeval = new Doeval({
       dotaskId,
       owner: item
     })
-    doeval.save().then(r => {
-      console.log(r)
-    })
+    doeval.save()
   })
 
-  for( let i = 0; i < list.length; i++) {
-    var index = this.userData.indexOf(list[i])
+  for(let i = 0; i < res.length; i++) {
+    var index = this.userData.indexOf(res[i])
     if (index > -1) this.userData.splice(index, 1)
   }
 

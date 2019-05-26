@@ -1,6 +1,7 @@
 import { API_SERVER } from '../../../constant/apis'
 
 export const API_FETCH_STANDARD = API_SERVER + '/standard/fetch'
+export const API_FETCH_SINGLE = API_SERVER + '/standard/fetchSingle'
 export const API_CREATE_STANDARD = API_SERVER + '/standard/create'
 export const API_CREATE_SINGLE = API_SERVER + '/standard/createSingle'
 export const API_UPDATE_STANDARD = API_SERVER + '/standard/update'

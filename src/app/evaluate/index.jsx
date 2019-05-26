@@ -50,8 +50,8 @@ class Evaluate extends React.Component {
         const standards = getValue(record, 'dotaskId.task.standards', [])
         return (
           <div>
-            {standards.map(item => (
-              <div key={item}>
+            {standards.map((item, idx) => (
+              <div key={idx}>
                 <Tag>{item.title}</Tag>
               </div>
             ))}
