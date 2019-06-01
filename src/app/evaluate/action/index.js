@@ -10,12 +10,30 @@ class EvalActions extends BaseActions {
   }
 
   @action
+  async fethCurrentEval(params) {
+    let r = await this.get(apis.API_FETCH_DOEVAL_ID, params)
+    runInAction(() => {
+      this.store.currentEval = r
+    })
+    return r
+  }
+
+  @action
   async fetch() {
     this.store.isLoading = true
     let r = await this.get(apis.API_FETCH_DOEVAL)
     runInAction(() => {
       this.store.evals = r
       this.store.isLoading = false
+    })
+    return r
+  }
+
+  @action
+  async fetchCurrent(params) {
+    let r = await this.get(apis.API_FETCH_DOEVAL_ID, params)
+    runInAction(() => {
+      this.store.curreneEval = r
     })
     return r
   }
