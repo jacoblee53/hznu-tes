@@ -1,48 +1,82 @@
+// {
+//   "presets": [
+//     [
+//       "@babel/preset-env",
+//       {
+//         "targets": {
+//           "browsers": [
+//             "last 2 versions"
+//           ]
+//         },
+//         "modules": false
+//       }
+//     ],
+//     "react-app",
+//   ],
+//   "comments": false,
+//   "plugins": [
+//     ["@babel/plugin-proposal-decorators", {
+//       "legacy": true
+//     }],
+//     "dynamic-import-node",
+//     ["@babel/plugin-proposal-class-properties", {
+//       "loose": true
+//     }],
+//     ["import", {
+//       "libraryName": "antd",
+//       "libraryDirectory": "es",
+//       "style": true
+//     }, "antd"],
+//     ["import", {
+//       "libraryName": "ant-design-pro",
+//       "libraryDirectory": "lib",
+//       "style": true,
+//       "camel2DashComponentName": false,
+//     }, "antd-pro"]
+//   ],
+//   "env": {
+//     "test":{
+//       "plugins": [
+
+//       ]
+//     },
+//     "development": {
+//       "plugins": [
+//         ["import", {
+//           "libraryName": "antd",
+//           "libraryDirectory": "es",
+//           "style": true
+//         }, "antd"],
+//         ["import", {
+//           "libraryName": "ant-design-pro",
+//           "libraryDirectory": "lib",
+//           "style": true,
+//           "camel2DashComponentName": false,
+//         }, "antd-pro"]
+//       ]
+//     }
+//   }
+// }
+
 {
-  "presets": [
-    [
-      "@babel/preset-env",
-      {
-        "targets": {
-          "browsers": [
-            "last 2 versions"
-          ]
-        },
-        "modules": false
-      }
-    ],
-    "react-app",
-  ],
-  "comments": false,
+  "presets": ["@babel/preset-env", "react-app"],
   "plugins": [
     ["@babel/plugin-proposal-decorators", {
       "legacy": true
     }],
-    "dynamic-import-node",
     ["@babel/plugin-proposal-class-properties", {
       "loose": true
     }],
-  ],
-  "env": {
-    "test":{
-      "plugins": [
-
-      ]
-    },
-    "development": {
-      "plugins": [
-        ["import", {
-          "libraryName": "antd",
-          "libraryDirectory": "es",
-          "style": true
-        }, "antd"],
-        ["import", {
-          "libraryName": "ant-design-pro",
-          "libraryDirectory": "lib",
-          "style": true,
-          "camel2DashComponentName": false,
-        }, "antd-pro"]
-      ]
-    }
-  }
+    ["import", {
+      "libraryName": "antd",
+      "libraryDirectory": "es",
+      "style": true
+    }, "antd"],
+    ["import", {
+      "libraryName": "ant-design-pro",
+      "libraryDirectory": "lib",
+      "style": true,
+      "camel2DashComponentName": false,
+    }, "antd-pro"]
+  ]
 }

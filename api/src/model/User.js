@@ -32,7 +32,7 @@ const userSchema = new mongoose.Schema({
   },
   classId: {
     type: Schema.Types.ObjectId,
-    ref: 'Class',
+    ref: 'Classes',
   },
 })
 

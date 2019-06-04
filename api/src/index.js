@@ -31,8 +31,14 @@ app.use('/dotask', dotask)
 app.use('/doeval', doeval)
 
 dotenv.config()
+var mongodbUrl = ''
+if (process.env.NODE_ENV === 'prod') {
+  mongodbUrl = process.env.MONGODB_URL_PROD
+} else {
+  mongodbUrl = process.env.MONGODB_URL_ENV
+}
 mongoose
-  .connect(process.env.MONGODB_URL, { useNewUrlParser: true })
+  .connect(mongodbUrl, { useNewUrlParser: true })
   .then(() => console.log('> database connect'))
 
 app.get('/*', (req, res) => {

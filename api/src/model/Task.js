@@ -82,6 +82,15 @@ function rnd(n, m) {
 	return random
 }
 
+function isInclude(arr, value) {
+  for (let i = 0; i < arr.length; i ++) {
+    if (arr[i].toString() === value.toString()) {
+      return true
+    }
+  }
+  return false
+}
+
 taskSchema.methods.createEval = function createEval(selfId, dotaskId) {
   var res = []
   var count = this.taskSize
@@ -92,7 +101,9 @@ taskSchema.methods.createEval = function createEval(selfId, dotaskId) {
 
   while(1) {
     var i = rnd(0, this.userData.length - 1)
-    if (!res.includes(this.userData[i])) {
+    if (!isInclude(res, this.userData[i]) && this.userData[i].toString() !== selfId.toString()) {
+      console.log(this.userData[i])
+      console.log(selfId)
       res.push(this.userData[i])
       count --
       if (count < 2) break

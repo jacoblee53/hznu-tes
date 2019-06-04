@@ -11,9 +11,9 @@ const doevalSchema = new mongoose.Schema({
     type: Schema.Types.ObjectId,
     ref: 'User'
   },
-  grade: [{
-    type: Array
-  }]
+  grade: {
+    type: String
+  }
 }, {
   timestamps: true,
 })
