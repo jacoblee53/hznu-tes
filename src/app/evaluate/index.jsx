@@ -5,7 +5,7 @@ import { API_SERVER } from '../../constant/apis'
 import moment from 'moment'
 
 import './index.less'
-
+import { calculateGrade } from '../../util/grade'
 @inject('evalStore', 'evalActions', 'userStore')
 @observer
 class Evaluate extends React.Component {
@@ -95,11 +95,12 @@ class Evaluate extends React.Component {
         )
       }
     }, {
-      title: '总分',
+      title: '评分',
       key: 'grade',
       render: (record) => {
+        const grade = getValue(record, 'grade', null)
         return (
-          <span>0</span>
+          <span>{calculateGrade(grade).toFixed(0)}</span>
         )
       }
     }, {

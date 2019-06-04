@@ -16,6 +16,9 @@ import myTaskActions from '../app/my-task/action'
 import evalStore from '../app/evaluate/store'
 import evalActions from '../app/evaluate/action'
 
+import scoreManageStore from '../app/score-manage/store'
+import scoreManageActions from '../app/score-manage/action'
+
 export default {
   userStore,
   userActions,
@@ -34,4 +37,7 @@ export default {
 
   evalStore,
   evalActions,
+
+  scoreManageStore,
+  scoreManageActions
 }

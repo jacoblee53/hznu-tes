@@ -1,4 +1,5 @@
 import { action, runInAction, toJS } from 'mobx'
+import { message } from 'antd'
 import BaseActions from '../../../component/BaseActions'
 import * as apis from '../constant/apis'
 import store from '../store'
@@ -35,6 +36,13 @@ class EvalActions extends BaseActions {
     runInAction(() => {
       this.store.curreneEval = r
     })
+    return r
+  }
+
+  @action
+  async grade(params) {
+    let r = await this.post(apis.API_SUBMIT_GRADE, params)
+    message.success('保存成功')
     return r
   }
 
