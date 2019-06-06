@@ -1,6 +1,6 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { Card, Button, List, Tag, Radio, Input } from 'antd'
+import { Card, Button, List, Tag, Input, Alert } from 'antd'
 import moment from 'moment'
 
 import EditTaskModal from './component/EditTaskModal'
@@ -59,12 +59,13 @@ class TaskManage extends React.Component {
     )
 
     const extraContent = (
-      <div className='extraContent'>
+      <div className='extraContent' style={{display: 'flex'}}>
         <Input.Search
           className='extraContentSearch'
           placeholder='请输入任务名称检索'
           onSearch={this.handleSearch}
         />
+        <Alert message='请确认班级人员后发布任务！' type="warning" showIcon />
       </div>
     )
 
@@ -80,7 +81,6 @@ class TaskManage extends React.Component {
         >
           新建
         </Button>
-
         <List
           size='middle'
           rowKey='id'
