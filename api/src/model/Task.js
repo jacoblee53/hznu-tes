@@ -97,7 +97,7 @@ taskSchema.methods.createEval = function createEval(selfId, dotaskId) {
 
   res.push(selfId)
   res.push(this.owner)
-  if (this.isExpert) res.concat(this.experts)
+  if (this.isExpert) res = res.concat(this.experts)
 
   while(1) {
     var i = rnd(0, this.userData.length - 1)

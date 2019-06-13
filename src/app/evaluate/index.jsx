@@ -72,12 +72,12 @@ class Evaluate extends React.Component {
               <Icon type='file-word' />
               </a>
             </Tag>
-            <Tag color={docPath?'orange':''} >
+            <Tag color={pptPath?'orange':''} >
               <a href={API_SERVER + '/' + pptPath} target='_blank'>
               <Icon type='file-ppt' />
               </a>
             </Tag>
-            <Tag color={docPath?'green':''} >
+            <Tag color={mediaPath?'green':''} >
               <a href={API_SERVER + '/' + mediaPath} target='_blank'>
               <Icon type='video-camera'/>
               </a>
