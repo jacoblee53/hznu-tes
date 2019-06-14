@@ -106,6 +106,7 @@ router.post('/grade', (req, res) => {
 
 router.get('/result', authToken, (req, res) => {
   const owner = req.currentUser._id
+  const ownerRole = req.currentUser.role
 
   Doeval
     .find()
@@ -159,17 +160,17 @@ router.get('/result', authToken, (req, res) => {
           if (owner === current.owner._id) {
             ratio = current.task.selfRatio
           } else {
-            ratio = ratios[role]
+            ratio = ratios[ownerRole]
           }
 
           result += (parseFloat(ratio) * parseFloat(grade))
           return {
-            score: (parseFloat(ratio) * parseFloat(grade)).toFixed(1),
+            score: (parseFloat(ratio) * parseFloat(grade)).toFixed(2),
             ...value,
           }
         })
         return {
-          score: result.toFixed(1),
+          score: result.toFixed(2),
           ...item,
         }
       })

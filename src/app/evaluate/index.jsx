@@ -100,7 +100,7 @@ class Evaluate extends React.Component {
       render: (record) => {
         const grade = getValue(record, 'grade', null)
         return (
-          <span>{calculateGrade(grade).toFixed(0)}</span>
+          <span>{calculateGrade(grade).toFixed(1)}</span>
         )
       }
     }, {
