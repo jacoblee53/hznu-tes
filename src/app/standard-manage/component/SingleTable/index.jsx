@@ -109,14 +109,15 @@ class SingleTable extends React.Component {
       title: '评价内容',
       dataIndex: 'content',
       editable: true,
-      width: '52%',
+      width: '58%',
     }, {
       title: '分值',
       dataIndex :'point',
       editable: true,
-      width: '10%',
+      width: '12%',
     }, {
       title: '操作',
+      width: '12%',
       dataIndex: 'operation',
       render: (text, record) => (
         <Fragment>
@@ -195,6 +196,7 @@ class SingleTable extends React.Component {
           rowClassName={() => 'editable-row'}
           size='small'
           bordered
+          pagination={false}
           dataSource={dataSource}
           columns={columns}
           rowKey={(record, idx) => idx}

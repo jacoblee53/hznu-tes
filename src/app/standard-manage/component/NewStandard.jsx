@@ -21,6 +21,7 @@ class NewStandard extends React.Component {
 
     return (
       <Modal
+        style={{ width: 200 }}
         title='新建标准'
         visible={visible}
         onCancel={onCancel}

@@ -1,12 +1,12 @@
 import React from 'react'
-import { Drawer, Table, Input, Icon, Button } from 'antd'
+import { Table, Divider } from 'antd'
 import { inject, observer } from 'mobx-react'
 
 import './index.less'
 
 @inject('classManageActions', 'classManageStore')
 @observer
-class EditDrawer extends React.Component {
+class ClassMemberTable extends React.Component {
   constructor(props) {
     super(props)
     this.actions = props.classManageActions
@@ -56,25 +56,14 @@ class EditDrawer extends React.Component {
         width: '30%'
       },
       {
-        title: '编辑',
+        title: '操作',
         width: '30%',
         render: (text, record) => {
           return (
             <div>
-              <Button.Group>
-                <Button
-                  size='small'
-                  onClick={() => this.handleResetPwd(record._id)}
-                >
-                  重置
-                </Button>
-                <Button
-                  size='small'
-                  onClick={() => this.handleRemove(record._id)}
-                >
-                  移除
-                </Button>
-              </Button.Group>
+              <a onClick={() => this.handleResetPwd(record._id)}>重置</a>
+              <Divider type='vertical' />
+              <a onClick={() => this.handleRemove(record._id)}>删除</a>
             </div>
           )
         }
@@ -82,34 +71,22 @@ class EditDrawer extends React.Component {
     ]
 
     return (
-      <Drawer
-        title={
+      <Table
+        title={() =>
           (currentClass &&
             `${currentClass.className} (${currentStudents.length}人)`) ||
           ''
         }
-        width={550}
-        destroyOnClose
-        visible={visible}
-        onClose={onClose}
-      >
-        <Table
-          className='stu-list-table'
-          dataSource={currentStudents}
-          columns={columns}
-          bordered
-          pagination={false}
-          rowKey='_id'
-          size='small'
-        />
-        <div className='drawer-bottom-block'>
-          <Button size='default' type='primary' onClick={this.handleAddMember}>
-            添加
-          </Button>
-        </div>
-      </Drawer>
+        className='stu-list-table'
+        dataSource={currentStudents}
+        columns={columns}
+        bordered
+        pagination={false}
+        rowKey='_id'
+        size='small'
+      />
     )
   }
 }
 
-export default EditDrawer
+export default ClassMemberTable

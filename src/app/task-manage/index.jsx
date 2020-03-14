@@ -9,8 +9,9 @@ import './index.less'
 
 const CustomTag = styled(Tag)`
   font-size: 10px;
-  line-height: 18px;
+  line-height: 16px;
   font-weight: normal;
+  border-radius: 0;
 `;
 
 @inject('taskManageActions', 'taskManageStore')
@@ -55,12 +56,12 @@ class TaskManage extends React.Component {
     const ListContent = ({ data: { startDate, endDate } }) => (
       <div className='list-content'>
         <div>
-          <span>创建：</span>
-          {moment(startDate).format('YYYY-MM-DD hh:mm')}
+          <span>创建时间：</span>
+          {moment(startDate).format('YYYY/MM/DD hh:mm')}
         </div>
         <div>
-          <span>截止：</span>
-          {moment(endDate).format('YYYY-MM-DD hh:mm')}
+          <span>截止时间：</span>
+          {moment(endDate).format('YYYY/MM/DD hh:mm')}
         </div>
       </div>
     )
@@ -110,7 +111,7 @@ class TaskManage extends React.Component {
                 title={
                   <>
                     {this.getTag(item.endDate)}
-                    <span style={{marginLeft: 4}}>{item.taskName}</span>
+                    <span style={{marginLeft: 3}}>{item.taskName}</span>
                   </>
                 }
                 description={item.taskDesc}

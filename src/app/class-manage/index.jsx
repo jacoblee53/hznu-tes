@@ -1,16 +1,16 @@
 import React, { Fragment } from 'react'
 import { inject, observer } from 'mobx-react'
-import { Card, Table, Input, Button, Icon, Popconfirm, message } from 'antd'
+import { Card, Tooltip, Button, Icon, Popconfirm, message, Tabs } from 'antd'
 import styled from 'styled-components'
 
 import { API_SERVER } from '../../constant/apis'
 import NewClass from './component/NewClass'
 import ImportExcel from './component/ImportExcel'
-import EditDrawer from './component/EditDrawer'
+import ClassMemberTable from './component/ClassMemberTable'
 import './index.less'
 
-const TableButton = styled(Button)`
-  margin-right: 24px;
+const TabButton = styled(Button)`
+  margin-right: 14px;
 `
 
 @inject('classManageStore', 'classManageActions')
@@ -23,7 +23,6 @@ class ClassManage extends React.Component {
 
     this.state = {
       isLoading: false,
-      isEditDrawer: false,
       isImportModal: false,
       isNewClassModal: false,
       currentClass: null,
@@ -83,156 +82,63 @@ class ClassManage extends React.Component {
   }
 
   render() {
-    const {
-      isLoading,
-      isNewClassModal,
-      isImportModal,
-      isEditDrawer,
-      currentClass
-    } = this.state
+    const { isNewClassModal, isImportModal, currentClass } = this.state
     const { classes } = this.store
-
-    const columns = [
-      {
-        title: '班级名称',
-        dataIndex: 'className',
-        width: '30%',
-        filterDropdown: ({
-          setSelectedKeys,
-          selectedKeys,
-          confirm,
-          clearFilters
-        }) => (
-          <div className='custom-filter-dropdown'>
-            <Input
-              ref={ele => (this.searchInput = ele)}
-              placeholder='班级名'
-              value={selectedKeys[0]}
-              onChange={e =>
-                setSelectedKeys(e.target.value ? [e.target.value] : [])
-              }
-              onPressEnter={this.handleSearch(selectedKeys, confirm)}
-            />
-            <Button
-              type='primary'
-              onClick={this.handleSearch(selectedKeys, confirm)}
-            >
-              查询
-            </Button>
-            <Button onClick={this.handleReset(clearFilters)}>重置</Button>
-          </div>
-        ),
-        filterIcon: filtered => (
-          <Icon
-            type='search'
-            style={{ color: filtered ? '#108ee9' : '#aaa' }}
-          />
-        ),
-        onFilter: (value, record) =>
-          record.className.toLowerCase().includes(value.toLowerCase()),
-        onFilterDropdownVisibleChange: visible => {
-          if (visible) {
-            setTimeout(() => {
-              this.searchInput.focus()
-            })
-          }
-        },
-        render: text => {
-          const { searchText } = this.state
-          return searchText ? (
-            <span>
-              {text
-                .split(new RegExp(`(?<=${searchText})|(?=${searchText})`, 'i'))
-                .map((fragment, i) =>
-                  fragment.toLowerCase() === searchText.toLowerCase() ? (
-                    <span key={i} className='highlight'>
-                      {fragment}
-                    </span>
-                  ) : (
-                    fragment
-                  )
-                )}
-            </span>
-          ) : (
-            text
-          )
-        }
-      },
-      {
-        title: '操作',
-        dataIndex: 'operation',
-        width: '40%',
-        render: (text, record) => (
-          <div>
-            <TableButton
-              size='small'
-              type='dashed'
-              onClick={() =>
-                this.setState({ isImportModal: true, currentClass: record })
-              }
-            >
-              <Icon type='import' />
-              导入
-            </TableButton>
-            <TableButton
-              size='small'
-              type='dashed'
-              onClick={() =>
-                this.setState({ isEditDrawer: true, currentClass: record })
-              }
-            >
-              <Icon type='edit' />
-              编辑
-            </TableButton>
-            <TableButton size='small' type='dashed'>
-              <Icon type='download' />
-              导出
-            </TableButton>
-            <Popconfirm
-              title='确定删除该班级么？'
-              okText='确认'
-              cancelText='取消'
-              onConfirm={() => this.handleDelete(record)}
-            >
-              <Button size='small' type='dashed'>
-                <Icon type='delete' />
-                移除
-              </Button>
-            </Popconfirm>
-          </div>
-        )
-      }
-    ]
 
     const extraContent = (
       <Fragment>
-        <TableButton
-          type='primary'
-          onClick={() => this.setState({ isNewClassModal: true })}
-        >
-          新建班级
-        </TableButton>
-        <Button type='primary' onClick={this.handleDownload}>
-          下载示例
-        </Button>
+        <Tooltip placement='top' title='下载示例'>
+          <TabButton size='small' onClick={this.handleDownload}>
+            <Icon type='download' />
+          </TabButton>
+        </Tooltip>
+        <Tooltip placement='top' title='新建班级'>
+          <Button
+            size='small'
+            onClick={() => this.setState({ isNewClassModal: true })}
+          >
+            <Icon type='plus' />
+          </Button>
+        </Tooltip>
       </Fragment>
     )
 
     return (
-      <Card
-        title='班级管理'
-        bordered={false}
-        extra={extraContent}
-        className='main-content-card'
-      >
-        <Table
-          rowKey='_id'
-          bordered
-          size='small'
-          loading={isLoading}
-          dataSource={classes}
-          columns={columns}
-        />
+      <Card bordered={false} className='main-content-card'>
+        <Tabs size='small' animated={false} tabBarExtraContent={extraContent}>
+          {classes &&
+            classes.map(i => (
+              <Tabs.TabPane tab={i.className} key={i._id}>
+                <div style={{ marginBottom: 15, textAlign: 'right' }}>
+                  <TabButton
+                    size='small'
+                    type='primary'
+                    onClick={() =>
+                      this.setState({
+                        isImportModal: true,
+                        currentClass: i
+                      })
+                    }
+                  >
+                    <Icon type='import' />
+                    导入
+                  </TabButton>
+                  <Popconfirm
+                    title='确定删除该班级么？'
+                    okText='确认'
+                    cancelText='取消'
+                    onConfirm={() => this.handleDelete(i)}
+                  >
+                    <Button size='small' type='primary'>
+                      <Icon type='delete' />
+                      移除
+                    </Button>
+                  </Popconfirm>
+                </div>
+                <ClassMemberTable currentClass={i} />
+              </Tabs.TabPane>
+            ))}
+        </Tabs>
 
         {isNewClassModal && (
           <NewClass
@@ -247,14 +153,6 @@ class ClassManage extends React.Component {
             visible={isImportModal}
             onOk={this.importStudent}
             onCancel={() => this.setState({ isImportModal: false })}
-          />
-        )}
-
-        {isEditDrawer && (
-          <EditDrawer
-            currentClass={currentClass}
-            visible={isEditDrawer}
-            onClose={() => this.setState({ isEditDrawer: false })}
           />
         )}
       </Card>

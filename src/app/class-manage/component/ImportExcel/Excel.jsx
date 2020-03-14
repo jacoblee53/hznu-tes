@@ -31,7 +31,7 @@ class Excel extends Component {
     return (
       <div style={{ marginBottom: 10 }}>
         <Button className='upload-wrap'>
-          <Icon type='upload' /> 点击导入
+          <Icon type='upload' size='small' /> 选取文件
           <input
             className='file-uploader'
             type='file'
@@ -40,7 +40,7 @@ class Excel extends Component {
           />
         </Button>
         <p className='upload-tip'>
-          仅支持.xlsx、.xls格式的文件（初始密码：123456）
+          仅支持.xlsx/.xls格式
         </p>
       </div>
     )

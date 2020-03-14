@@ -57,13 +57,13 @@ class Dashboard extends React.Component {
           </span>
         </Menu.Item>
         <Menu.Item>
-          <span onClick={this.logout}>
-            <Icon type='poweroff' /> <span>退出登录</span>
+          <span onClick={() => {window.open('https://github.com/oddisland/hznu-tes/issues/new')}}>
+            <Icon type='question' /> <span>问题反馈</span>
           </span>
         </Menu.Item>
         <Menu.Item>
-          <span onClick={() => {window.open('https://github.com/oddisland/hznu-tes/issues/new')}}>
-            <Icon type='question' /> <span>问题反馈</span>
+          <span onClick={this.logout}>
+            <Icon type='poweroff' /> <span>退出登录</span>
           </span>
         </Menu.Item>
       </Menu>

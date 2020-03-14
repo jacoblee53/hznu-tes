@@ -13,7 +13,6 @@ const StandardButton = styled(Button)`
   width: 29%;
 `
 const GradeSpan = styled.span`
-  font-size: 14px;
   font-weight: bold;
   letter-spacing: 1px;
 `
@@ -65,8 +64,6 @@ class Evaluate extends React.Component {
       location.origin + location.pathname + '#/evaluate/' + item._id
     )
   }
-
-  exportGrade = () => {}
 
   generateStandardButton = (icon, path) => {
     const gotoLocation = path => {
@@ -162,7 +159,7 @@ class Evaluate extends React.Component {
             {tasks && tasks.length > 0 && (
               <Select
                 size='default'
-                defaultValue={tasks && tasks.length > 0 && tasks[0]._id}
+                defaultValue={tasks[0]._id}
                 style={{ width: 200 }}
                 onChange={this.onSelectChange}
               >
@@ -172,15 +169,6 @@ class Evaluate extends React.Component {
                   </Select.Option>
                 ))}
               </Select>
-            )}
-            {role === 1 && (
-              <Button
-                type='primary'
-                onClick={this.exportGrade}
-                style={{ marginLeft: 10 }}
-              >
-                导出成绩
-              </Button>
             )}
           </Fragment>
         }
