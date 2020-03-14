@@ -1,7 +1,8 @@
 import React, { Fragment } from 'react'
-import { Card, Table, Select, Button } from 'antd'
+import { Card, Table, Select, Button, Modal } from 'antd'
 import { inject, observer } from 'mobx-react'
 
+import ScoreChart from './component/ScoreChart'
 import './index.less'
 
 @inject(
@@ -18,6 +19,7 @@ class ScoreManage extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      isChartModal: false,
       currentData: [],
       currentTask: '',
       currentClass: ''
@@ -78,6 +80,7 @@ class ScoreManage extends React.Component {
       classManageStore,
       taskManageStore
     } = this.props
+    const { isChartModal } = this.state
     const { user } = userStore
     const { classes } = classManageStore
     const { tasks } = taskManageStore
@@ -102,7 +105,11 @@ class ScoreManage extends React.Component {
         title: '总分',
         dataIndex: 'score',
         render: text => (
-          <span style={{ fontWeight: 'bold', color: '#0070cc', letterSpacing: 1 }}>{text}</span>
+          <span
+            style={{ fontWeight: 'bold', color: '#0070cc', letterSpacing: 1 }}
+          >
+            {text}
+          </span>
         )
       }
     ]
@@ -115,9 +122,9 @@ class ScoreManage extends React.Component {
         render: (text, record) => {
           const values = getValue(record, 'value', [])
           return (
-            <div style={{display: 'flex', justifyContent: 'space-between'}}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
               {values.sort().map(i => (
-                <div style={{width: '23%', textAlign: 'left'}} key={i._id}>
+                <div style={{ width: '23%', textAlign: 'left' }} key={i._id}>
                   {i.owner.userName}: {i.score}
                 </div>
               ))}
@@ -160,9 +167,11 @@ class ScoreManage extends React.Component {
         <Button
           type='primary'
           style={{ marginLeft: 14 }}
-          onClick={() => {}}
+          onClick={() => {
+            this.setState({ isChartModal: true })
+          }}
         >
-          查看统计
+          图表统计
         </Button>
         <Button
           type='primary'
@@ -189,6 +198,11 @@ class ScoreManage extends React.Component {
           dataSource={this.state.currentData}
           columns={columns}
         />
+        {isChartModal && (
+          <Modal width={600} visible onCancel={() => this.setState({isChartModal: false})} >
+            <ScoreChart data={this.state.currentData} />
+          </Modal>
+        )}
       </Card>
     )
   }
