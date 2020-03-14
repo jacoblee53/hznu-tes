@@ -99,7 +99,7 @@ class ClassManage extends React.Component {
           <div className='custom-filter-dropdown'>
             <Input
               ref={ele => (this.searchInput = ele)}
-              placeholder='查询班级'
+              placeholder='班级名'
               value={selectedKeys[0]}
               onChange={e =>
                 setSelectedKeys(e.target.value ? [e.target.value] : [])
@@ -181,7 +181,7 @@ class ClassManage extends React.Component {
               style={mr}
             >
               <Icon type='download' />
-              下载
+              导出
             </Button>
             <Popconfirm
               title='确定删除该班级么？'
@@ -194,7 +194,7 @@ class ClassManage extends React.Component {
                 type='dashed'
               >
                 <Icon type='delete' />
-                删除
+                移除
               </Button>
             </Popconfirm>
           </div>

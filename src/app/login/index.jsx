@@ -81,7 +81,7 @@ class LoginForm extends React.Component {
                 {getFieldDecorator('password', {
                   rules: [{ required: true, message: '请输入密码！' }]
                 })(
-                  <Input
+                  <Input.Password
                     prefix={<Icon type='lock' />}
                     name='password'
                     type='password'
@@ -103,7 +103,7 @@ class LoginForm extends React.Component {
           </div>
         </div>
         <div className='login__footer'>
-          <GlobalFooter links={footerLinks} copyright='hznu tes © 2019 oddisland' />
+          <GlobalFooter links={footerLinks} copyright='学科竞赛评价系统 © 2020 oddisland' />
         </div>
       </div>
     )

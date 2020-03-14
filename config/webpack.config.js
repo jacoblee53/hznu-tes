@@ -23,6 +23,7 @@ const getClientEnvironment = require('./env');
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin');
 const ForkTsCheckerWebpackPlugin = require('react-dev-utils/ForkTsCheckerWebpackPlugin');
 const typescriptFormatter = require('react-dev-utils/typescriptFormatter');
+const overridesTheme = require('./theme');
 
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
@@ -105,16 +106,13 @@ module.exports = function(webpackEnv) {
       },
     ].filter(Boolean);
     if (preProcessor) {
-      if (preProcessor === 'less-loader') { // 为less-loader添加配置项，启动javascript
+      if (preProcessor === 'less-loader') {
         loaders.push({
           loader: require.resolve(preProcessor),
           options: {
             sourceMap: isEnvProduction && shouldUseSourceMap,
-            modifyVars: { // 修改主题
-              'primary-color': '#5755d9',
-              'border-radius-base': '2px',
-            },
-            javascriptEnabled: true // 解决上文报错
+            modifyVars: overridesTheme,
+            javascriptEnabled: true
           },
         });
       } else {

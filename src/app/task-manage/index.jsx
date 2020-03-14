@@ -2,9 +2,16 @@ import React from 'react'
 import { inject, observer } from 'mobx-react'
 import { Card, Button, List, Tag, Input, Alert } from 'antd'
 import moment from 'moment'
+import styled from 'styled-components'
 
 import EditTaskModal from './component/EditTaskModal'
 import './index.less'
+
+const CustomTag = styled(Tag)`
+  font-size: 10px;
+  line-height: 18px;
+  font-weight: normal;
+`;
 
 @inject('taskManageActions', 'taskManageStore')
 @observer
@@ -32,8 +39,8 @@ class TaskManage extends React.Component {
 
   getTag = endDate => {
     return moment() > moment(endDate) ?
-      <Tag className='status-tag' color='#e85600'>已截止</Tag> :
-      <Tag className='status-tag' color='#32b643'>进行中</Tag>
+      <CustomTag className='status-tag' color='#e85600'>已截止</CustomTag> :
+      <CustomTag className='status-tag' color='#32b643'>进行中</CustomTag>
   }
 
   deleteTask = id => {
@@ -48,11 +55,11 @@ class TaskManage extends React.Component {
     const ListContent = ({ data: { startDate, endDate } }) => (
       <div className='list-content'>
         <div>
-          <span>起始日期：</span>
+          <span>创建：</span>
           {moment(startDate).format('YYYY-MM-DD hh:mm')}
         </div>
         <div>
-          <span>截止日期：</span>
+          <span>截止：</span>
           {moment(endDate).format('YYYY-MM-DD hh:mm')}
         </div>
       </div>
@@ -61,11 +68,11 @@ class TaskManage extends React.Component {
     const extraContent = (
       <div className='extraContent' style={{display: 'flex'}}>
         <Input.Search
+          size="default"
           className='extraContentSearch'
-          placeholder='请输入任务名称检索'
+          placeholder='任务名'
           onSearch={this.handleSearch}
         />
-        <Alert message='请确认班级人员后发布任务！' type="warning" showIcon />
       </div>
     )
 
@@ -87,7 +94,7 @@ class TaskManage extends React.Component {
           loading={listLoading}
           dataSource={tasks}
           pagination={{
-            pageSize: 5,
+            pageSize: 8,
             showQuickJumper: true
           }}
           renderItem={item => (

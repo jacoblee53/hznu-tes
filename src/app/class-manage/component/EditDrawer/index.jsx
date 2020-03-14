@@ -53,19 +53,25 @@ class EditDrawer extends React.Component {
       {
         title: '姓名',
         dataIndex: 'userName',
-        width: '26%'
+        width: '30%'
       },
       {
         title: '编辑',
-        width: '34%',
+        width: '30%',
         render: (text, record) => {
           return (
             <div>
               <Button.Group>
-                <Button size='small' onClick={() => this.handleResetPwd(record._id)}>
+                <Button
+                  size='small'
+                  onClick={() => this.handleResetPwd(record._id)}
+                >
                   重置
                 </Button>
-                <Button size='small' onClick={() => this.handleRemove(record._id)}>
+                <Button
+                  size='small'
+                  onClick={() => this.handleRemove(record._id)}
+                >
                   移除
                 </Button>
               </Button.Group>
@@ -77,26 +83,29 @@ class EditDrawer extends React.Component {
 
     return (
       <Drawer
-        title={(currentClass && `${currentClass.className}（共${currentStudents.length}人）`) || ''}
+        title={
+          (currentClass &&
+            `${currentClass.className} (${currentStudents.length}人)`) ||
+          ''
+        }
         width={550}
         destroyOnClose
         visible={visible}
         onClose={onClose}
       >
         <Table
+          className='stu-list-table'
           dataSource={currentStudents}
           columns={columns}
+          bordered
+          pagination={false}
           rowKey='_id'
           size='small'
         />
         <div className='drawer-bottom-block'>
-          <Input.Search
-            className='search-stu-input'
-            prefix={<Icon type='user-add' style={{ color: 'rgba(0,0,0,.25)' }} />}
-            placeholder='请输入学号'
-            enterButton='添加'
-            onSearch={this.handleAddMember}
-          />
+          <Button size='default' type='primary' onClick={this.handleAddMember}>
+            添加
+          </Button>
         </div>
       </Drawer>
     )
