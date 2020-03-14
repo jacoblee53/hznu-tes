@@ -42,21 +42,6 @@ class Dashboard extends React.Component {
     this.setState({ menu: r })
   }
 
-  showPersonalInfo = () => {
-    const { user } = this.store
-    {user && Modal.info({
-      title: '个人信息',
-      onOk() {},
-      content: (
-        <div className='userinfo'>
-          <p>账号：{user.account}</p>
-          <p>姓名：{user.userName}</p>
-          <p>角色：{config.userType[user.role]}</p>
-        </div>
-      )
-    })}
-  }
-
   showPwdModal = () => {
     this.setState({ isShowModal: true })
   }
@@ -67,11 +52,6 @@ class Dashboard extends React.Component {
     const dropdownMenu = (
       <Menu>
         <Menu.Item>
-          <span onClick={this.showPersonalInfo}>
-            <Icon type='user' /> <span>个人信息</span>
-          </span>
-        </Menu.Item>
-        <Menu.Item>
           <span onClick={this.showPwdModal}>
             <Icon type='lock' /> <span>修改密码</span>
           </span>
@@ -79,6 +59,11 @@ class Dashboard extends React.Component {
         <Menu.Item>
           <span onClick={this.logout}>
             <Icon type='poweroff' /> <span>退出登录</span>
+          </span>
+        </Menu.Item>
+        <Menu.Item>
+          <span onClick={() => {window.open('https://github.com/oddisland/hznu-tes/issues/new')}}>
+            <Icon type='question' /> <span>问题反馈</span>
           </span>
         </Menu.Item>
       </Menu>
@@ -101,7 +86,7 @@ class Dashboard extends React.Component {
                 <Dropdown overlay={dropdownMenu}>
                   <span className='account'>
                     <Avatar className='avatar' icon='user' />
-                    <span>{user && user.userName} | {user && config.userType[user.role]}</span>
+                    <span>{user && user.userName}</span>
                   </span>
                 </Dropdown>
               </Col>

@@ -1,6 +1,7 @@
 import React, { Fragment } from 'react'
 import { inject, observer } from 'mobx-react'
 import { Card, Table, Input, Button, Icon, Popconfirm, message } from 'antd'
+import styled from 'styled-components'
 
 import { API_SERVER } from '../../constant/apis'
 import NewClass from './component/NewClass'
@@ -8,9 +9,9 @@ import ImportExcel from './component/ImportExcel'
 import EditDrawer from './component/EditDrawer'
 import './index.less'
 
-const mr = {
-  marginRight: 24
-}
+const TableButton = styled(Button)`
+  margin-right: 24px;
+`
 
 @inject('classManageStore', 'classManageActions')
 @observer
@@ -26,7 +27,7 @@ class ClassManage extends React.Component {
       isImportModal: false,
       isNewClassModal: false,
       currentClass: null,
-      searchText: '',
+      searchText: ''
     }
   }
 
@@ -82,7 +83,13 @@ class ClassManage extends React.Component {
   }
 
   render() {
-    const { isLoading, isNewClassModal, isImportModal, isEditDrawer, currentClass } = this.state
+    const {
+      isLoading,
+      isNewClassModal,
+      isImportModal,
+      isEditDrawer,
+      currentClass
+    } = this.state
     const { classes } = this.store
 
     const columns = [
@@ -157,42 +164,37 @@ class ClassManage extends React.Component {
         width: '40%',
         render: (text, record) => (
           <div>
-            <Button
+            <TableButton
               size='small'
               type='dashed'
-              style={mr}
-              onClick={() => this.setState({ isImportModal: true, currentClass: record })}
+              onClick={() =>
+                this.setState({ isImportModal: true, currentClass: record })
+              }
             >
               <Icon type='import' />
               导入
-            </Button>
-            <Button
+            </TableButton>
+            <TableButton
               size='small'
               type='dashed'
-              onClick={() => this.setState({ isEditDrawer: true, currentClass: record })}
-              style={mr}
+              onClick={() =>
+                this.setState({ isEditDrawer: true, currentClass: record })
+              }
             >
               <Icon type='edit' />
               编辑
-            </Button>
-            <Button
-              size='small'
-              type='dashed'
-              style={mr}
-            >
+            </TableButton>
+            <TableButton size='small' type='dashed'>
               <Icon type='download' />
               导出
-            </Button>
+            </TableButton>
             <Popconfirm
               title='确定删除该班级么？'
               okText='确认'
               cancelText='取消'
               onConfirm={() => this.handleDelete(record)}
             >
-              <Button
-                size='small'
-                type='dashed'
-              >
+              <Button size='small' type='dashed'>
                 <Icon type='delete' />
                 移除
               </Button>
@@ -204,15 +206,16 @@ class ClassManage extends React.Component {
 
     const extraContent = (
       <Fragment>
-        <Button
+        <TableButton
           type='primary'
-          style={mr}
-          onClick={() => this.setState({ isNewClassModal: true})}
+          onClick={() => this.setState({ isNewClassModal: true })}
         >
           新建班级
+        </TableButton>
+        <Button type='primary' onClick={this.handleDownload}>
+          下载示例
         </Button>
-        <Button type='primary' onClick={this.handleDownload}>下载示例</Button>
-     </Fragment>
+      </Fragment>
     )
 
     return (
@@ -231,23 +234,29 @@ class ClassManage extends React.Component {
           columns={columns}
         />
 
-        {isNewClassModal && <NewClass
-          visible={isNewClassModal}
-          onOk={this.createClass}
-          onCancel={() => this.setState({ isNewClassModal: false })}
-        />}
+        {isNewClassModal && (
+          <NewClass
+            visible={isNewClassModal}
+            onOk={this.createClass}
+            onCancel={() => this.setState({ isNewClassModal: false })}
+          />
+        )}
 
-        {isImportModal && <ImportExcel
-          visible={isImportModal}
-          onOk={this.importStudent}
-          onCancel={() => this.setState({ isImportModal: false })}
-        />}
+        {isImportModal && (
+          <ImportExcel
+            visible={isImportModal}
+            onOk={this.importStudent}
+            onCancel={() => this.setState({ isImportModal: false })}
+          />
+        )}
 
-        {isEditDrawer && <EditDrawer
-          currentClass={currentClass}
-          visible={isEditDrawer}
-          onClose={() => this.setState({ isEditDrawer: false})}
-        />}
+        {isEditDrawer && (
+          <EditDrawer
+            currentClass={currentClass}
+            visible={isEditDrawer}
+            onClose={() => this.setState({ isEditDrawer: false })}
+          />
+        )}
       </Card>
     )
   }
