@@ -33,15 +33,8 @@ class Evaluate extends React.Component {
     }
   }
 
-  async componentDidMount() {
-    await this.fetch()
-    const { tasks } = this.props.taskManageStore
-    if (tasks && tasks.length > 0) {
-      const currentData = this.props.evalStore.evals.filter(
-        i => i === tasks[0]._id
-      )
-      this.setState({ currentData })
-    }
+  componentDidMount() {
+    this.fetch()
   }
 
   onSelectChange = value => {
@@ -54,9 +47,17 @@ class Evaluate extends React.Component {
     }
   }
 
-  fetch() {
-    this.props.evalActions.fetch()
-    this.props.taskManageActions.fetch()
+  async fetch() {
+    await this.props.evalActions.fetch()
+    await this.props.taskManageActions.fetch()
+    console.log(this.props.evalStore.evals)
+    const { tasks } = this.props.taskManageStore
+    if (tasks && tasks.length > 0) {
+      const currentData = this.props.evalStore.evals.filter(
+        i => i === tasks[0]._id
+      )
+      this.setState({ currentData })
+    }
   }
 
   doEval = item => {

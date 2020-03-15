@@ -72,7 +72,7 @@ router.get('/fetch',  (req, res) => {
   const owner = req.currentUser._id
 
   Task
-    .find({ owner })
+    .find()
     .sort([['createdAt', -1]])
     .exec()
     .then(r => {

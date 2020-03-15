@@ -31,31 +31,58 @@ class ScoreManage extends React.Component {
   }
 
   async fetch() {
-    await this.props.classManageActions.fetch()
+    const { user } = this.props.userStore
+    const role = getValue(user, 'role', false)
+    const id = getValue(user, 'id', '')
+    const classId = getValue(user, 'classId', '')
+    role !== 2 && (await this.props.classManageActions.fetch())
     await this.props.scoreManageActions.fetchResult()
     await this.props.taskManageActions.fetch()
     const { tasks } = this.props.taskManageStore
     const { classes } = this.props.classManageStore
-    if (tasks && tasks.length > 0 && classes && classes.length > 0) {
+    if (tasks && tasks.length > 0) {
       const currentTask = tasks[0]._id
-      const currentClass = classes[0]._id
-      const currentData = this.props.scoreManageStore.results.filter(
-        i =>
-          i.task._id === currentTask && i.task.taskClass.indexOf(value) !== -1
-      )
-      this.setState({ currentData, currentTask, currentClass })
+      if (role === 2) {
+        const currentData = this.props.scoreManageStore.results.filter(
+          i => i.task._id === currentTask && i.owner._id === id
+        )
+        this.setState({ currentData, currentTask, currentClass: classId })
+      } else {
+        if (classes && classes.length > 0) {
+          const currentClass = classes[0]._id
+          const currentData = this.props.scoreManageStore.results.filter(
+            i =>
+              i.task._id === currentTask &&
+              i.task.taskClass.indexOf(value) !== -1
+          )
+          this.setState({ currentData, currentTask, currentClass })
+        }
+      }
     }
   }
 
   onSelectTaskChange = value => {
     const { tasks } = this.props.taskManageStore
+    const { user } = this.props.userStore
+    const role = getValue(user, 'role', false)
+    const id = getValue(user, 'id', '')
     if (tasks && tasks.length > 0) {
-      const currentData = this.props.scoreManageStore.results.filter(
-        i =>
-          i.task._id === value &&
-          i.task.taskClass.indexOf(this.state.currentClass) !== -1
-      )
-      this.setState({ currentData, currentTask: value })
+      if (role === 2) {
+        const currentData = this.props.scoreManageStore.results.filter(
+          i =>
+            i.owner._id === id &&
+            i.task._id === value &&
+            i.task.taskClass.indexOf(this.state.currentClass) !== -1
+        )
+        this.setState({ currentData, currentTask: value })
+      } else {
+        const currentData = this.props.scoreManageStore.results.filter(
+          i =>
+            i.task._id === value &&
+            i.task.taskClass.indexOf(this.state.currentClass) !== -1
+        )
+        this.setState({ currentData, currentTask: value })
+      }
     }
   }
 
@@ -84,13 +111,7 @@ class ScoreManage extends React.Component {
     const { user } = userStore
     const { classes } = classManageStore
     const { tasks } = taskManageStore
-    var { results } = scoreManageStore
     const role = getValue(user, 'role', false)
-    const id = getValue(user, 'id', '')
-
-    if (role === 2) {
-      results = results.filter(item => item.owner._id === id)
-    }
 
     const columns = [
       {
@@ -136,7 +157,7 @@ class ScoreManage extends React.Component {
 
     const extraContent = (
       <Fragment>
-        {tasks && tasks.length > 0 && classes && classes.length > 0 && (
+        {tasks && tasks.length > 0 && (
           <Fragment>
             <Select
               size='default'
@@ -150,36 +171,33 @@ class ScoreManage extends React.Component {
                 </Select.Option>
               ))}
             </Select>
-            <Select
-              size='default'
-              defaultValue={classes[0]._id}
-              style={{ width: 100, marginLeft: 14 }}
-              onChange={this.onSelectClassChange}
-            >
-              {classes.map(i => (
-                <Select.Option key={i._id} value={i._id}>
-                  {i.className}
-                </Select.Option>
-              ))}
-            </Select>
+            {classes && classes.length > 0 && role !== 2 && (
+              <Select
+                size='default'
+                defaultValue={classes[0]._id}
+                style={{ width: 100, marginLeft: 14 }}
+                onChange={this.onSelectClassChange}
+              >
+                {classes.map(i => (
+                  <Select.Option key={i._id} value={i._id}>
+                    {i.className}
+                  </Select.Option>
+                ))}
+              </Select>
+            )}
           </Fragment>
         )}
-        <Button
-          type='primary'
-          style={{ marginLeft: 14 }}
-          onClick={() => {
-            this.setState({ isChartModal: true })
-          }}
-        >
-          图表统计
-        </Button>
-        <Button
-          type='primary'
-          style={{ marginLeft: 14 }}
-          onClick={this.exportGrade}
-        >
-          导出成绩
-        </Button>
+        {role !== 2 && (
+          <Button
+            type='primary'
+            style={{ marginLeft: 14 }}
+            onClick={() => {
+              this.setState({ isChartModal: true })
+            }}
+          >
+            统计导出
+          </Button>
+        )}
       </Fragment>
     )
 
@@ -199,7 +217,11 @@ class ScoreManage extends React.Component {
           columns={columns}
         />
         {isChartModal && (
-          <Modal width={600} visible onCancel={() => this.setState({isChartModal: false})} >
+          <Modal
+            width={600}
+            visible
+            onCancel={() => this.setState({ isChartModal: false })}
+          >
             <ScoreChart data={this.state.currentData} />
           </Modal>
         )}

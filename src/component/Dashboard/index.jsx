@@ -1,9 +1,19 @@
 import React from 'react'
 import { inject, observer } from 'mobx-react'
-import { Layout, Row, Col, Dropdown, Icon, Menu, Avatar, Modal, BackTop } from 'antd'
+import {
+  Layout,
+  Row,
+  Col,
+  Dropdown,
+  Icon,
+  Menu,
+  Avatar,
+  Modal,
+  BackTop
+} from 'antd'
 
 import DashMenu from '../Menu/index'
-import config from '../../util/config'
+import ChangePwdModal from './ChangePwdModal'
 import './index.less'
 
 @inject('userActions', 'userStore')
@@ -27,18 +37,18 @@ class Dashboard extends React.Component {
     this.setState({ collapsed: !this.state.collapsed })
   }
 
-  logout = async() => {
+  logout = async () => {
     await this.actions.logout()
-    window.location.assign(
-      location.origin + location.pathname + '#' + '/login'
-    )
+    window.location.assign(location.origin + location.pathname + '#' + '/login')
   }
 
-  fetchMenu = async() => {
+  fetchMenu = async () => {
     const { user } = this.store
-    let r = user ? await this.actions.fetchMenu({
-      role: user.role
-    }) : []
+    let r = user
+      ? await this.actions.fetchMenu({
+          role: user.role
+        })
+      : []
     this.setState({ menu: r })
   }
 
@@ -57,7 +67,11 @@ class Dashboard extends React.Component {
           </span>
         </Menu.Item>
         <Menu.Item>
-          <span onClick={() => {window.open('https://github.com/oddisland/hznu-tes/issues/new')}}>
+          <span
+            onClick={() => {
+              window.open('https://github.com/oddisland/hznu-tes/issues/new')
+            }}
+          >
             <Icon type='question' /> <span>问题反馈</span>
           </span>
         </Menu.Item>
