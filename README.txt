@@ -22,3 +22,7 @@
 2. 打包：./scripts/datatar.sh
 3. 查看：ls -l
 4. 下载至本地：scp root@39.106.86.250:/api/data_xxx.tar.gz <本地路径>
+
+# 数据库
+
+1. dump远端数据库：mongodump --uri="mongodb://$sourceUser:$sourcePwd@$sourceHost/$sourceDb" --gzip --archive | mongorestore --uri="mongodb://$targetUser:$targetPwd@$targetHost/$targetDb" --nsFrom="$sourceDb.*" --nsTo="$targetDb.*" --gzip --archive
