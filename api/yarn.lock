@@ -1278,9 +1278,9 @@ browserslist@^3.2.6:
     electron-to-chromium "^1.3.47"
 
 bson@^1.1.4:
-  version "1.1.4"
-  resolved "https://registry.npm.taobao.org/bson/download/bson-1.1.4.tgz#f76870d799f15b854dffb7ee32f0a874797f7e89"
-  integrity sha1-92hw15nxW4VN/7fuMvCodHl/fok=
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/bson/-/bson-1.1.6.tgz#fb819be9a60cd677e0853aee4ca712a785d6618a"
+  integrity sha512-EvVNVeGo4tHxwi8L6bPj3y3itEvStdwvvlojVxxbyYfoaxJ6keLgrTuKdyfEAszFK+H3olzBuafE0yoh0D1gdg==
 
 buffer-equal-constant-time@1.0.1:
   version "1.0.1"
@@ -3075,7 +3075,7 @@ node-fetch@^2.1.2, node-fetch@^2.2.0:
   resolved "https://registry.npm.taobao.org/node-fetch/download/node-fetch-2.6.0.tgz#e633456386d4aa55863f676a7ab0daa8fdecb0fd"
   integrity sha1-5jNFY4bUqlWGP2dqerDaqP3ssP0=
 
-node-pre-gyp@*, node-pre-gyp@0.14.0:
+node-pre-gyp@0.14.0:
   version "0.14.0"
   resolved "https://registry.npm.taobao.org/node-pre-gyp/download/node-pre-gyp-0.14.0.tgz#9a0596533b877289bcad4e143982ca3d904ddc83"
   integrity sha1-mgWWUzuHcom8rU4UOYLKPZBN3IM=
